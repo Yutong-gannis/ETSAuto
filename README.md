@@ -11,4 +11,4 @@ Use PID and pure pursuit to control
 Use finite state machine
 
 # Run
-python script/main.py
+`python script/main.py`
