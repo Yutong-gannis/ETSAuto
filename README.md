@@ -16,7 +16,7 @@ Use finite state machine
 
 2.tensorrt文件须用onnx文件进行转换
 
-2.须自行下载vjoy虚拟手柄。
+2.须自行下载vjoy虚拟手柄软件。
 
 3.因为时间原因，未尝试更多的环境，python环境尽量与requirements.txt中保持一致。
 
