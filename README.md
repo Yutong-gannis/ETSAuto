@@ -11,6 +11,9 @@ Use PID and pure pursuit to control
 Use finite state machine
 
 
+# Run
+`python script/main.py`
+
 # 使用方法
 1.车道线检测与物体检测的pt文件和onnx文件已提供，PaddleOCR权重文件需前往PaddleOCR官方仓库下载。
 
@@ -24,5 +27,3 @@ Use finite state machine
 
 终端输入`python script/main.py`以运行。
 
-# Run
-`python script/main.py`
