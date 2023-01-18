@@ -19,7 +19,7 @@ Use finite state machine
 
 2.车道线检测与物体检测的pt文件和onnx文件已提供，PaddleOCR权重文件需前往PaddleOCR官方仓库下载。
 
-3.tensorrt文件须用onnx文件进行转换
+3.下载[onnx权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases/tag/v1.0), tensorrt文件须用onnx文件进行转换
 
 4.须自行下载vjoy虚拟手柄软件。
 
