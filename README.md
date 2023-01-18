@@ -15,7 +15,7 @@ Use finite state machine
 `python script/main.py`
 
 # 使用方法
-1.开始前，请确保CUDA, cudnn, tensorrt安装完成。
+1.开始前，请确保CUDA, cudnn, tensorrt安装完成。没安装的话，请先安装CUDA，CUDA的版本决定cudnn, tensorrt, 以及一些python库的版本。CUDA版本由显卡决定，不一定和我一样，安装尽量高的版本。
 
 2.车道线检测与物体检测的pt文件和onnx文件已提供，PaddleOCR权重文件需前往PaddleOCR官方仓库下载。
 
