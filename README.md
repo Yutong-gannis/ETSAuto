@@ -19,7 +19,9 @@ Use finite state machine
 
 2.车道线检测与物体检测的pt文件和onnx文件已提供，PaddleOCR权重文件需前往PaddleOCR官方仓库下载。
 
-3.下载[onnx权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases/tag/v1.0)，tensorrt文件须用onnx文件进行转换。CLRNet权重转换方法可参考[CLRNet-onnxruntime-and-tensorrt-demo](https://github.com/xuanandsix/CLRNet-onnxruntime-and-tensorrt-demo)，YOLOV6转换方法`python tools/export.py -o yolov6n_bdd_40.onnx -e yolov6n_bdd_40.engine --end2end`
+3.下载[onnx权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases/tag/v1.0)，tensorrt文件须用onnx文件进行转换。CLRNet权重转换方法可参考[CLRNet-onnxruntime-and-tensorrt-demo](https://github.com/xuanandsix/CLRNet-onnxruntime-and-tensorrt-demo)，YOLOV6转换方法`python tools/export.py -o [onnx文件路径] -e [engine文件路径] --end2end`
+
+例如`python tools/export.py -o yolov6n_bdd_40.onnx -e yolov6n_bdd_40.engine --end2end`
 
 4.须自行下载vjoy虚拟手柄软件。
 
