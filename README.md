@@ -29,3 +29,9 @@ Use finite state machine
 
 终端输入`python script/main.py`以运行。
 
+# reference
+[CLRNet](https://github.com/Turoad/CLRNet)
+[CLRNet-onnxruntime-and-tensorrt-demo](https://github.com/xuanandsix/CLRNet-onnxruntime-and-tensorrt-demo)
+[YOLOV6](https://github.com/meituan/YOLOv6)
+[pyvjoy](https://github.com/tidzo/pyvjoy)
+[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
