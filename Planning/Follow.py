@@ -1,6 +1,10 @@
+import os
+current_path = os.path.dirname(os.path.abspath(__file__))
+project_path = os.path.abspath(os.path.join(current_path, '..'))
+
 import numpy as np
 import sys
-sys.path.insert(0, 'D:/autodrive/Control')
+sys.path.insert(0, os.path.abspath(os.path.join(project_path, 'Control')))
 from controllers.fuzzy_controller import fuzzy_compute
 
 

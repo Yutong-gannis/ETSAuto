@@ -5,7 +5,11 @@ import warnings
 warnings.filterwarnings('ignore')
 import os, sys
 
-sys.path.insert(0, 'D:/autodrive/Perception')
+current_path = os.path.dirname(os.path.abspath(__file__))
+project_path = os.path.abspath(os.path.join(current_path, '..'))
+
+perception_path = os.path.abspath(os.path.join(project_path, 'Perception'))
+sys.path.insert(0, perception_path)
 from ObjectDetection.yolov6_trt import YOLOPredictor
 from ObjectDetection.cipv_notice import cipv_notice
 from ObjectDetection.ByteTrack.tracker.byte_tracker import BYTETracker
@@ -16,17 +20,20 @@ from StopLineDetection.Linedetection import line_filter
 sys.path.insert(0,'D:/autodrive/PaddleSeg')
 from deploy.python.seg_infer import SegPredictor
 '''
-sys.path.insert(0,'D:/autodrive/Planning')
+planning_path = os.path.abspath(os.path.join(project_path, 'Planning'))
+sys.path.insert(0, planning_path)
 from FSMPlaning import FSMPlanner, PlanTrigger
 from Cruise import Cruise
 from Follow import Follow
 
-sys.path.insert(0,'D:/autodrive/Control')
+control_path = os.path.abspath(os.path.join(project_path, 'Control'))
+sys.path.insert(0, control_path)
 from drive import driver, end, Truck
 from controllers.PID_controller import PID
 from controllers.fuzzy_controller import fuzzy_initialization
 
-sys.path.insert(0,'D:/autodrive/Navigation')
+navigation_path = os.path.abspath(os.path.join(project_path, 'Navigation'))
+sys.path.insert(0, navigation_path)
 from BevDraw import draw_bev, print_info
 from Navigation_Process import nav_process
 
@@ -50,8 +57,10 @@ device = 'cuda:0'
 CAM = cam()  # 定义相机
 CAM_BL = backcam_left()  # 定义左后视镜
 #encoder, depth_decoder, feed_height, feed_width = load_monodepth(device) # 加载深度估计模型
-yolopredictor = YOLOPredictor(engine_path="D:/autodrive/Perception/ObjectDetection/weights/yolov6s_bdd_300.engine")
-clrnet = CLRNet("D:/autodrive/Perception/LaneDetection/weights/llamas_dla34.engine")
+yolo_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'yolov6s_bdd_60.engine'))
+yolopredictor = YOLOPredictor(engine_path = yolo_engine_path)
+llamas_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'llamas_dla34.engine'))
+clrnet = CLRNet(llamas_engine_path)
 ocr = PaddleOCR(enable_mkldnn=True, use_tensorrt=True, use_angle_cls=False, lang="en", use_gpu=False, show_log=False)
 #segpredictor = SegPredictor("D:/autodrive/PaddleSeg/output/inference_model_mobile_seg/deploy.yaml")
 fsmplanner = FSMPlanner("autotruck")
