@@ -23,6 +23,8 @@ Use finite state machine
 
 例如`python tools/export.py -o yolov6n_bdd_40.onnx -e yolov6n_bdd_40.engine --end2end`
 
+也可参考[https://github.com/Linaom1214/TensorRT-For-YOLO-Series]。
+
 4.须自行下载vjoy虚拟手柄软件。
 
 5.因为时间原因，未尝试更多的环境，python环境尽量与requirements.txt中保持一致。
