@@ -40,7 +40,7 @@ Use finite state machine
 
 [YOLOV6](https://github.com/meituan/YOLOv6)
 
-[TensorRT-For-YOLO-Series]https://github.com/Linaom1214/TensorRT-For-YOLO-Series
+[TensorRT-For-YOLO-Series](https://github.com/Linaom1214/TensorRT-For-YOLO-Series)
 
 [pyvjoy](https://github.com/tidzo/pyvjoy)
 
