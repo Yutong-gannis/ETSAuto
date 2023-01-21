@@ -1,4 +1,11 @@
 # Self-driving-Truck-in-Euro-Truck-Simulator2
+### 目录
++ 简介(# 简介)
++ 快速开始(# 快速开始（详细环境设置及部署见后文）)
++ 环境搭建(# 如何从零开始构建环境)
++ 开始自动驾驶(# 如何自动驾驶)
++ reference(# reference)
+
 # 简介
 这是一个在欧洲卡车模拟2上运行的辅助驾驶系统。采用YOLOV6进行目标检测，CLRNet进行进行车道线检测，monodepth2进行深度估计，以及利用其他传统方法进行环境感知。在控制方面，采用PID进行横向纵向控制，采用purepursuit进行低速状态下的横向控制，利用有限状态机进行决策场景切换。
 This is a self-driving truck test in Euro Truck Simulator2. I only test on windows11 + python3.8 + CUDA10.2.
