@@ -1,18 +1,14 @@
 # Self-driving-Truck-in-Euro-Truck-Simulator2
+# 简介
 This is a self-driving truck test in Euro Truck Simulator2. I only test on windows11 + python3.8 + CUDA10.2.
-
-# Perception
+### Perception
 Use yolov6 to detect objects, clrnet to detect lane
 
-# Control
+### Control
 Use PID and pure pursuit to control
 
-# Plan
+### Plan
 Use finite state machine
-
-
-# Run
-`python script/main.py`
 
 # 使用方法
 1.开始前，请确保CUDA, cudnn, tensorrt安装完成。没安装的话，请先安装CUDA，CUDA的版本决定cudnn, tensorrt, 以及一些python库的版本。CUDA版本由显卡决定，不一定和我一样，安装尽量高的版本。
