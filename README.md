@@ -1,7 +1,7 @@
 # Self-driving-Truck-in-Euro-Truck-Simulator2
 ### 目录
 + [简介](#简介)
-+ [快速开始](#快速开始（详细环境设置及部署见后文）)
++ [快速开始](#快速开始)
 + [环境搭建](#如何从零开始构建环境)
 + [开始自动驾驶](#如何自动驾驶)
 + [reference](#reference)
@@ -18,7 +18,7 @@ Use PID and pure pursuit to control
 ### Plan
 Use finite state machine
 
-# 快速开始（详细环境设置及部署见后文）
+# 快速开始
 1.开始前，请确保CUDA, cudnn, tensorrt安装完成。没安装的话，请先安装CUDA，CUDA的版本决定cudnn, tensorrt, 以及一些python库的版本。CUDA版本由显卡决定，不一定和我一样，安装尽量高的版本。
 
 2.车道线检测与物体检测的pt文件和onnx文件已提供，PaddleOCR权重文件需前往PaddleOCR官方仓库下载。
