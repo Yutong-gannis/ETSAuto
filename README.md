@@ -1,5 +1,6 @@
 # Self-driving-Truck-in-Euro-Truck-Simulator2
 # 简介
+这是一个在欧洲卡车模拟2上运行的辅助驾驶系统。采用YOLOV6进行目标检测，CLRNet进行进行车道线检测，monodepth2进行深度估计，以及利用其他传统方法进行环境感知。在控制方面，采用PID进行横向纵向控制，采用purepursuit进行低速状态下的横向控制，利用有限状态机进行决策场景切换。
 This is a self-driving truck test in Euro Truck Simulator2. I only test on windows11 + python3.8 + CUDA10.2.
 ### Perception
 Use yolov6 to detect objects, clrnet to detect lane
@@ -10,7 +11,7 @@ Use PID and pure pursuit to control
 ### Plan
 Use finite state machine
 
-# 使用方法
+# 快速开始（详细环境设置及部署见后文）
 1.开始前，请确保CUDA, cudnn, tensorrt安装完成。没安装的话，请先安装CUDA，CUDA的版本决定cudnn, tensorrt, 以及一些python库的版本。CUDA版本由显卡决定，不一定和我一样，安装尽量高的版本。
 
 2.车道线检测与物体检测的pt文件和onnx文件已提供，PaddleOCR权重文件需前往PaddleOCR官方仓库下载。
