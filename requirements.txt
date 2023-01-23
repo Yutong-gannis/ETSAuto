@@ -5,7 +5,7 @@ paddlepaddle>=1.0.2
 paddleocr==2.6.1.2
 opencv-python>=4.5.5.64
 pyvjoy
-numpy==1.23.5
+nump<1.24
 scikit-learn
 scikit-fuzzy
 transitions
