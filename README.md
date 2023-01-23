@@ -182,6 +182,13 @@ PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
 
 从[项目地址](https://sourceforge.net/projects/vjoystick/)下载 vJoy，双击安装。
 
+### 安装mod
+
+通过创意工坊下载mod
+
+- Google Maps Navigation Night Version
+- SISL's Route Adviser
+
 ### 设置游戏
 
 - 选项 - 图像，取消全屏模式，设置合适的分辨率。
