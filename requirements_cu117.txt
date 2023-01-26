@@ -1,7 +1,5 @@
 --extra-index-url https://download.pytorch.org/whl/cu117
 torch==1.13.1+cu117
-#torchvision
-#torchaudio
 tensorrt==8.4.2.4
 paddlepaddle>=1.0.2
 paddleocr==2.6.1.2
