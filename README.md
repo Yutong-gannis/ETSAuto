@@ -35,7 +35,7 @@ Use finite state machine
 
 5.因为时间原因，未尝试更多的环境，python环境尽量与requirements.txt中保持一致。
 
-6.main.py中设置的根目录设置为自己电脑上的文件根目录
+6.main.py中设置的根目录设置为自己电脑上的文件根目录。
 
 终端输入`python script/main.py`以运行。
 
@@ -44,17 +44,19 @@ Use finite state machine
 ### 所依赖的项目简介
 
 - Python
+
   依赖的包支持的最小版本各有不同，推荐使用3.8版本。如使用 [Miniconda](https://docs.conda.io/en/latest/miniconda.html) 来构建环境会节省很多时间。
 
 - CUDA
-  [官网地址](https://developer.nvidia.com/cuda-toolkit)， 推荐使用 [10.2](https://developer.nvidia.com/cuda-10.2-download-archive) 版本，次选[11.7.0](https://developer.nvidia.com/cuda-11-7-0-download-archive) 版本，其他版本支持情况未知。
 
-  版本 `v12.0` 现阶段 `PyTorch` 等依赖的包还未支持。
+  [官网地址](https://developer.nvidia.com/cuda-toolkit)， 推荐使用 [10.2](https://developer.nvidia.com/cuda-10.2-download-archive) 版本，次选[11.7.0](https://developer.nvidia.com/cuda-11-7-0-download-archive) 版本，其他版本支持情况未知。版本 `v12.0` 现阶段 `PyTorch` 等依赖的包还未支持。
 
 - cuDNN (For CUDA 11.x, 10.2)
+
   [8.7 下载地址](https://developer.nvidia.com/rdp/cudnn-download)，跟CUDA版本匹配。其他介绍请参照 [cuDNN 安装手册](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html)。
 
 - TensorRT (For CUDA 11.x, 10.2)
+
   [8.x 下载地址](https://developer.nvidia.com/nvidia-tensorrt-8x-download)，跟CUDA版本匹配，推荐使用 `8.4.2.4(TensorRT 8.4 GA Update 1)` 版本。其他介绍请参照 [TensorRT 安装手册](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html)。
 
 - CUDA、cuDNN、TensorRT 请结合各自官方文档自行配置系统的 Path。
@@ -94,10 +96,10 @@ Use finite state machine
 
     - numpy
 
-        从 1.24 版本开始删除了 `numpy.float` 等方法，因此需要使用 1.24 之前的版本。这里直接锁定使用 1.23.5。
+        从 1.24 版本开始删除了 `numpy.float` 等方法，因此需要使用 1.24 之前的版本。
 
         ```bash
-        python -m pip install numpy==1.23.5
+        python -m pip install numpy<1.24
         ```
 
     - tensorrt
@@ -105,7 +107,7 @@ Use finite state machine
         依赖包请从tensorrt的所在文件夹中进行安装。
 
         ```bash
-        # 注意这是在 windows 下的写法
+        # 注意这是在 windows 的 PowerShell 下的写法
         python -m pip install $env:TENSORRT_PATH\python\tensorrt-8.4.2.4-cp38-none-win_amd64.whl
         ```
 
@@ -116,7 +118,7 @@ Use finite state machine
         需要先安装 numpy 成功之后才能安装该依赖包。
 
         ```bash
-        python -m pip install numpy==1.23.5 lap
+        python -m pip install numpy<1.24 lap
         ```
 
 ### 安装依赖包
@@ -160,6 +162,8 @@ True
     python ./tools/export.py -o ./engines/yolov6s_bdd_60.onnx -e ./engines/yolov6s_bdd_60.engine --end2end
     ```
 
+    如在命令行中出现 `FP16 is not supported natively on this platform/device` 的提示消息请在命令行后面添加 `-p fp32` 或者 `-p int8`，根据所使用显卡不同而不同。
+
 - 构建 CLRNet 的 TensorRT 文件
 
     ```bash
@@ -173,6 +177,7 @@ Windows11 + Python3.8 的条件下在如下环境中运行成功。
 
 - CUDA 10.2 + cuDNN 8.7.0 + TensorRT 8.4.2.4
 - CUDA 11.7 + cuDNN 8.7.0 + TensorRT 8.4.2.4
+- CUDA 11.7 + cuDNN 8.7.0 + TensorRT 8.4.3.1
 
 PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
 
@@ -191,9 +196,8 @@ PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
 
 ### 设置游戏
 
-- 选项 - 图像，取消全屏模式，设置合适的分辨率。
+- 选项 - 图像，取消全屏模式，分辨率设置为 1280x720。
 - 选项 - 控制，选择 `键盘 + vJoy Device`。
-- 分辨率设置为1280x720。
 - 把游戏窗口移动到合适的位置。
 
 # reference
