@@ -4,7 +4,7 @@ from sklearn.cluster import DBSCAN
 import cv2
 
 
-class Bev_Lane:  # 封装车道线类(金丹）
+class Bev_Lane:  # 封装车道线类
     def __init__(self, cls, position_type, fit, endpoint, startpoint, lanes_pts):
         self.cls = cls  # 车道线线型 虚线：0， 实线：1
         self.position_type = position_type
