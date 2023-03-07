@@ -66,13 +66,13 @@ ocr = PaddleOCR(enable_mkldnn=True, use_tensorrt=True, use_angle_cls=False, lang
 fsmplanner = FSMPlanner("autotruck")
 planetrigger = PlanTrigger()
 
-track_thresh = 0.4
-track_buffer = 15
-match_thresh = 0.75
-frame_rate = 5
-aspect_ratio_thresh = 1.6
-min_box_area = 10
-mot20_check = False
+track_thresh = 0.4 # 跟踪阈值
+track_buffer = 15 # 跟踪缓冲区
+match_thresh = 0.75 # 匹配阈值
+frame_rate = 5 # 帧率
+aspect_ratio_thresh = 1.6 # 长宽比阈值
+min_box_area = 10 # 最小框面积
+mot20_check = False # 是否使用mot20检测
 vehicle_tracker = BYTETracker(track_thresh, track_buffer, match_thresh, mot20_check, frame_rate)
 
 truck = Truck()  # 初始化汽车状态模型
@@ -88,6 +88,7 @@ pts2 = np.array([[0, 0], [900, 0],
                  [350, 900], [550, 900]], dtype=np.float32)
 M = cv2.getPerspectiveTransform(pts1, pts2)  # 原图的透视变换矩阵
 
+# 初始化参数
 speed = 0
 truck.ang = 0.5
 speed_limit = 0
@@ -110,7 +111,7 @@ class MyThread(threading.Thread):
         except Exception:
             return None
 
-img = cv2.cvtColor(grab_screen(region=(0, 40, 1360, 807)), cv2.COLOR_RGB2BGR)  # [768, 1360, 3]RGB通道图像
+img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)  # [768, 1360, 3]RGB通道图像
 im0 = img.copy()
 while True:
     if 'last_time' in locals().keys():
@@ -119,7 +120,7 @@ while True:
         refer_time = 0.18
     last_time = time.time()
 
-    img = cv2.cvtColor(grab_screen(region=(0, 40, 1360, 807)), cv2.COLOR_RGB2BGR)  # [768, 1360, 3]RGB通道图像
+    img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)  # [768, 1360, 3]RGB通道图像
     im0 = img.copy()
 
     # 环境感知
@@ -162,7 +163,7 @@ while True:
     im1 = np.uint8(im1)
 
     # 自车状态监控
-    bar = cv2.cvtColor(img[750:768, 545:595, :], cv2.COLOR_RGB2BGR)  # 截取信息条[18, 480, 3]
+    bar = cv2.cvtColor(img[750:768, 545:595, :], cv2.COLOR_RGB2BGR)  # 截取速度条[18, 50, 3]
     speed = speed_detect(ocr, bar, truck.speed)
     speed_limit = curve_speed_limit
 

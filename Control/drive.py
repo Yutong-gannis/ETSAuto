@@ -15,12 +15,12 @@ class Truck:  # 阿克曼转向模型
         self.dtheta = 0
         self.ang = 0
         self.acc = 0
-        self.l = 6.0  # 轴距
-        self.bev_l = 60  # bev下轴距
+        self.l = 3.5  # 轴距 带挂车为3.5-4，不带挂车为6
+        self.bev_l = 35  # bev下轴距 带挂车为35-40，不带挂车为60
+        self.L = 3.5  # 车辆全长 带挂车为3.5-4，不带挂车为6
         self.speed = 0  # 速度
         self.bev_speed = 0  # bev下的速度
         self.dv = 0  # 速度变量
-        self.L = 6.0  # 车辆全长
         self.k = 1.0
         self.ld = self.k * self.bev_speed + self.L  # 后轮到观察点距离
         self.dt = 0.2  # 决策间隔时间
