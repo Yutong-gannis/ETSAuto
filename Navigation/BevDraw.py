@@ -93,7 +93,7 @@ def display_bev_lanes(bevmap, bev_lanes, stop_line, width=2):
 
     return bevmap
 
-def print_info(bevmap, refer_time, truck, speed_limit, state, weather):
+def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info):
     cv2.putText(bevmap, 'Infer time: {:.4f}s'.format(refer_time), (10, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=0.5, color=(200, 200, 200), thickness=1)
     cv2.putText(bevmap, "Steer angle: {:.2f}".format((truck.ang - 0.5) * 180), (10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
@@ -104,6 +104,23 @@ def print_info(bevmap, refer_time, truck, speed_limit, state, weather):
                 fontScale=0.5, color=(255, 255, 255), thickness=1)
     cv2.putText(bevmap, "power: {:.1f}".format((1-truck.acc)*10), (10, 75), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=0.5, color=(255, 255, 255), thickness=1)
+    cv2.putText(bevmap, "ld: {:.4f}".format(truck.ld), (10, 120), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5, color=(255, 255, 255), thickness=1)
+    cv2.putText(bevmap, "lf: {:.4f}".format(truck.lf), (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5, color=(255, 255, 255), thickness=1)
+    if not info.activeAP:
+        cv2.putText(bevmap, "AP: {}".format(info.activeAP), (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.5, color=(255, 255, 255), thickness=1)
+        if info.AP_exit_reason == 1:
+            cv2.putText(bevmap, "AP exited, please take control immediately!!!", (10, 332), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                        fontScale=0.5, color=(0, 0, 255), thickness=1)
+    elif info.roads_type == 0:
+        cv2.putText(bevmap, "AP: road", (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.5, color=(255, 255, 255), thickness=1)
+    elif info.roads_type == 1:
+        cv2.putText(bevmap, "AP: highway", (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.5, color=(255, 255, 255), thickness=1)        
+            
 
     if state is not None:
         cv2.putText(bevmap, state, (10, 90), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
