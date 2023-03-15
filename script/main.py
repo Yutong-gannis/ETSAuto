@@ -46,7 +46,7 @@ import numpy as np
 import torch
 from paddleocr import PaddleOCR
 from ABS import TTC
-from camera import cam, backcam_left
+from camera import cam, backcam_left, backcam_right
 from threading import Thread
 import threading
 import win32api
@@ -58,6 +58,7 @@ device = 'cuda:0'
 
 CAM = cam()  # 定义相机
 CAM_BL = backcam_left()  # 定义左后视镜
+CAM_BR = backcam_right()  # 定义右后视镜
 #encoder, depth_decoder, feed_height, feed_width = load_monodepth(device) # 加载深度估计模型
 yolo_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'yolov6s_bdd_60.engine'))
 yolopredictor = YOLOPredictor(engine_path = yolo_engine_path)
@@ -139,7 +140,7 @@ while True:
 
     # 目标检测
     im1 = cv2.resize(cv2.cvtColor(img, cv2.COLOR_RGB2BGR), (1280, 720)).copy()  # 检测结果画布
-    im1, obstacles, objs, tracks, traffic_light = yolopredictor.inference(cv2.resize(cv2.cvtColor(img, cv2.COLOR_RGB2BGR), (1280, 720)), CAM, CAM_BL, im1, vehicle_tracker, tracks, refer_time, conf=0.4)
+    im1, obstacles, objs, tracks, traffic_light = yolopredictor.inference(cv2.resize(cv2.cvtColor(img, cv2.COLOR_RGB2BGR), (1280, 720)), CAM, CAM_BL, CAM_BR, im1, vehicle_tracker, tracks, refer_time, conf=0.4)
 
     # 车道线检测
     bev_lanes = []

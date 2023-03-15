@@ -28,8 +28,8 @@ class Obstacle:  # 对障碍物信息进行封装
         self.cipv = None # 是否为前方最邻近车辆 是：True
 
 
-def postprocess(dets, CAM, CAM_BL, tracker, tracks, infer_time):  # 目标追踪后处理主函数
-    objs, traffic_lights_list = position(dets, CAM, CAM_BL)
+def postprocess(dets, CAM, CAM_BL, CAM_BR, tracker, tracks, infer_time):  # 目标追踪后处理主函数
+    objs, traffic_lights_list = position(dets, CAM, CAM_BL, CAM_BR)
     if len(objs) >= 1:
         objs = np.array(objs)
         targets = tracker.update(torch.tensor(objs), [600, 800], (600, 800))
@@ -44,7 +44,7 @@ def postprocess(dets, CAM, CAM_BL, tracker, tracks, infer_time):  # 目标追踪
     return obstacles, objs, tracks, traffic_light
 
 
-def position(dets, CAM, CAM_BL):  # 定位
+def position(dets, CAM, CAM_BL, CAM_BR):  # 定位
     objs = []
     traffic_lights_list = []
     for det in dets:
@@ -65,8 +65,8 @@ def position(dets, CAM, CAM_BL):  # 定位
                     box[1] = 470 + int(position[0, 1])
                     box[2] = 400 + int((position[0, 0]))
                     box[3] = 530 + int(position[0, 1])
-            elif (x0+x1)/2 < 1280 and (x0+x1)/2 > 1100 and y1 <= 240: # 处理左后视镜
-                position = CAM_BL.pixel_to_world([(x0 + x1) / 2, 240 - y1])[0]  # 相对距离
+            elif (x0+x1)/2 < 1280 and (x0+x1)/2 > 1100 and y1 <= 240: # 处理右后视镜
+                position = CAM_BR.pixel_to_world([(x0 + x1) / 2, 240 - y1])[0]  # 相对距离
                 if box[5] == 2:
                     box[0] = 400 + int((position[0, 0]))
                     box[1] = 470 + int(position[0, 1])
