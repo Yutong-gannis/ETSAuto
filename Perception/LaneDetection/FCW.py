@@ -22,7 +22,7 @@ class Bev_Lane:  # 封装车道线类
         self.pts = lanes_pts  # 车道线上所有的点
 
 def FCW(nav_line, speed):
-    long = 430 * (1 - speed / 1000 * 10)
+    long = 420 * (1 - speed / 1000 * 10)
     if long < 210:
         long = 210
 

@@ -26,7 +26,6 @@ sys.path.insert(0, planning_path)
 from FSMPlaning import FSMPlanner, PlanTrigger
 from Cruise import Cruise
 from Follow import Follow
-from ActiveCollisionAvoidance import ActiveCollisionAvoidance
 
 control_path = os.path.abspath(os.path.join(project_path, 'Control'))
 sys.path.insert(0, control_path)
@@ -186,19 +185,14 @@ while True:
         if state_trigger is not None:
             fsmplanner.trigger(state_trigger)
             state = fsmplanner.state
-    elif state == 'ActiveCollisionAvoidance':
-        state = 'Cruise'
 
     # 控制
     acc = 0.5
     ang = 0.5
 
     acc, ang = Cruise(vertical_pid, horizontal_pid, truck, speed_limit, nav_line, info)
-    
     if state == 'Follow' and cipv is not None:
-        acc = Follow(cipv, vertical_fuzzy)
-    if state == 'ActiveCollisionAvoidance':
-        acc, ang = ActiveCollisionAvoidance(truck, nav_line)
+        acc = Follow(cipv, vertical_fuzzy, truck)
 
     if info.activeAP:
         driver(ang, acc)
