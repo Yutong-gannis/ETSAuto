@@ -44,7 +44,9 @@ class Info:
         self.roads_type = 0  # 0：普通道路 1：高速公路
         self.road_speed = [50, 50, 45, 40, 30]  # 道路速度
         self.AP_exit_reason = 0  # 自动驾驶退出原因 0：正常退出 1：地图导航获取路线出错
-        self.direction = 0  # -1：左转 0：直行 1：右转
+        self.direction = 0  # -2: 左转 -1：左变道 0：直行 1：右变道 2：右转
+        self.change_lane = 0  # <0：左变道 0：不变道 >0：右变道
+        self.change_lane_dest = 0  # 变道目标车道
 
     def update(self, roads_type):  # 更新道路类型
         self.roads_type = roads_type

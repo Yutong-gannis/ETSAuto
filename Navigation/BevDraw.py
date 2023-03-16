@@ -121,13 +121,13 @@ def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info):
      
      
     if info.direction == 0:
-        cv2.putText(bevmap, "direction: straight", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "straight", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
-    elif info.direction == -1:
-        cv2.putText(bevmap, "direction: left", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+    elif info.direction < 0:
+        cv2.putText(bevmap, "left", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
-    elif info.direction == 1:
-        cv2.putText(bevmap, "direction: right", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+    elif info.direction > 0:  
+        cv2.putText(bevmap, "right", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
             
 

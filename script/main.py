@@ -1,6 +1,11 @@
 '''
 自动驾驶主程序
 '''
+# title_bar_height = 47
+# frame_left_width = 4
+# frame_right_width = 2
+# frame_bottom_height = 2
+
 import warnings
 warnings.filterwarnings('ignore')
 import os, sys
@@ -39,7 +44,7 @@ from BevDraw import draw_bev, print_info
 from Navigation_Process import nav_process
 
 from ocr_tool import speed_detect
-from grab_screen import grab_screen
+from grab_screen import grab_screen, get_window_rect
 import cv2
 import time
 import numpy as np
@@ -49,7 +54,7 @@ from ABS import TTC
 from camera import cam, backcam_left, backcam_right
 from threading import Thread
 import threading
-import win32api
+import win32api, win32gui
 last_time = time.time()
 
 torch.backends.cudnn.benchmark = True
@@ -62,7 +67,7 @@ CAM_BR = backcam_right()  # 定义右后视镜
 #encoder, depth_decoder, feed_height, feed_width = load_monodepth(device) # 加载深度估计模型
 yolo_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'yolov6s_bdd_60.engine'))
 yolopredictor = YOLOPredictor(engine_path = yolo_engine_path)
-llamas_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'llamas_dla34.engine'))
+#llamas_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'llamas_dla34.engine'))
 #clrnet = CLRNet(llamas_engine_path)
 ocr = PaddleOCR(enable_mkldnn=True, use_tensorrt=True, use_angle_cls=False, lang="en", use_gpu=False, show_log=False)
 #segpredictor = SegPredictor("D:/autodrive/PaddleSeg/output/inference_model_mobile_seg/deploy.yaml")
@@ -115,7 +120,14 @@ class MyThread(threading.Thread):
         except Exception:
             return None
 
-img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)  # [768, 1360, 3]RGB通道图像
+cipv = None
+img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)
+# window_rect = get_window_rect(win32gui.FindWindow(None, "Euro Truck Simulator 2"))
+# window_rect = (window_rect[0] + frame_left_width,
+#                 window_rect[1] + title_bar_height,
+#                 window_rect[2] - frame_right_width,
+#                 window_rect[3] - frame_bottom_height)
+# img = cv2.resize(cv2.cvtColor(grab_screen(region=window_rect), cv2.COLOR_RGB2BGR), (1360, 768))
 im0 = img.copy()
 while True:
     if 'last_time' in locals().keys():
@@ -124,7 +136,13 @@ while True:
         refer_time = 0.18
     last_time = time.time()
 
-    img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)  # [768, 1360, 3]RGB通道图像
+    img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)
+    # window_rect = get_window_rect(win32gui.FindWindow(None, "Euro Truck Simulator 2"))
+    # window_rect = (window_rect[0] + frame_left_width,
+    #                 window_rect[1] + title_bar_height,
+    #                 window_rect[2] - frame_right_width,
+    #                 window_rect[3] - frame_bottom_height)
+    # img = cv2.resize(cv2.cvtColor(grab_screen(region=window_rect), cv2.COLOR_RGB2BGR), (1360, 768))
     im0 = img.copy()
 
     # 环境感知
@@ -151,11 +169,22 @@ while True:
         bev_lanes = []
     '''
 
+    # 变道
+    if info.change_lane / 15 != info.change_lane_dest:
+        if info.change_lane / 15 < info.change_lane_dest:
+            info.change_lane = info.change_lane + 1
+            info.direction = 1
+        else:
+            info.change_lane = info.change_lane - 1
+            info.direction = -1
+    else:
+        info.direction = 0
+
     # 导航图处理
     navmap = cv2.cvtColor(img[610:740, 580:780, :], cv2.COLOR_RGB2BGR)  # 截取导航地图[130, 200, 3]
     navmap[:, 0:50, :] = np.zeros([130, 50, 3])
     navmap[:, 150:200, :] = np.zeros([130, 50, 3])
-    nav_line, curve_speed_limit = nav_process(navmap, info)
+    nav_line, curve_speed_limit = nav_process(navmap, truck, info, cipv)
     im1 = np.uint8(im1)
 
     # 自车状态监控
@@ -233,12 +262,17 @@ while True:
     if win32api.GetAsyncKeyState(0x36):
         if not info.activeAP:
             info.activeAP = True
+            info.change_lane_dest = 0
             info.update(0)
         else:
             if info.roads_type == 0:
                 info.update(1)
             else:
                 info.update(0)
+    if win32api.GetAsyncKeyState(0xDB) and info.change_lane / 15 == info.change_lane_dest:
+            info.change_lane_dest = info.change_lane_dest - 1
+    if win32api.GetAsyncKeyState(0xDD) and info.change_lane / 15 == info.change_lane_dest:
+        info.change_lane_dest = info.change_lane_dest + 1
 
 time.sleep(0.1)
 end()

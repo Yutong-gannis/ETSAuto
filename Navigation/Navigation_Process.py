@@ -8,9 +8,9 @@ class Nav_Line:  # 封装导航线信息
         self.pts_x = pts_x
         self.pts_y = pts_y
 
-def nav_process(nav, info):
+def nav_process(nav, truck, info, cipv):
     bev_nav = nav2bev(nav)
-    nav_line = get_nav_line(bev_nav, info)
+    nav_line = get_nav_line(bev_nav, truck, info, cipv)
     curve = np.abs(nav_line.fit[0])
     if curve <= 0.0005:
         curve_speed_limit = info.road_speed[0]
@@ -57,7 +57,7 @@ def filter_out_red(img):
     mask = mask+75
     return mask
 
-def get_nav_line(img, info):
+def get_nav_line(img, truck, info, cipv):
     middle_pts = []
     turn = []
     x = 400
@@ -71,7 +71,7 @@ def get_nav_line(img, info):
         if j == 0 or j == 799 or k == 0 or k == 799:
             break
         x = int((j+k)/2)
-        middle_pts.append([x, i])
+        middle_pts.append([x + info.change_lane, i])
 
         #直角弯道判断
         if len(middle_pts) >= 12 and i < 435:
@@ -81,6 +81,17 @@ def get_nav_line(img, info):
             near = (near[0][0]+near[1][0]+near[2][0]+near[3][0]+near[4][0]+near[5][0])/6
             if np.abs(near-far) > 30:
                 turn.append(near-far)
+    
+    if (len(turn) >0 and cipv is not None) or (len(turn) >0 and truck.speed > 25):
+        middle_pts = []
+        for i in range(540, 340, -5):
+            middle_pts.append([400, i])
+        if np.mean(turn) > 0:
+            info.direction = -2
+        else:
+            info.direction = 2
+        info.road_speed = [30, 30, 30, 30, 30]
+        turn = [0]
     
     middle_pts = np.array(middle_pts) # 路线中心线
     if len(middle_pts):
@@ -94,21 +105,22 @@ def get_nav_line(img, info):
     
     #直角弯道左转
     if len(turn) >0 and np.mean(turn) > 0:
-        info.direction = -1
+        info.direction = -2
         info.road_speed = [30, 30, 30, 30, 30]
         fit = [0.0003552, -0.304186, 463.918]
         pts_y = np.linspace(300, 470, 50)
         pts_x = fit[0] * pts_y ** 2 + fit[1] * pts_y + fit[2]
     #直角弯道右转
     if len(turn) >0 and np.mean(turn) < 0:
-        info.direction = 1
+        info.direction = 2
         info.road_speed = [30, 30, 30, 30, 30]
         fit = [-0.00021, 0.246, 328.3826]
         pts_y = np.linspace(300, 470, 50)
         pts_x = fit[0] * pts_y ** 2 + fit[1] * pts_y + fit[2]
     #无直角弯道或直角弯道结束
     if len(turn) == 0:
-        info.direction = 0
+        if info.direction != -1 and info.direction != 1:
+            info.direction = 0
         info.update(info.roads_type)
 
     nav_pts = []

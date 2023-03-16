@@ -1,3 +1,4 @@
+import ctypes
 import numpy as np
 import win32gui, win32ui, win32con
 
@@ -24,6 +25,21 @@ def grab_screen(region):
     win32gui.DeleteObject(bmp.GetHandle())
 
     return img
+
+def get_window_rect(hwnd):
+    try:
+        f = ctypes.windll.dwmapi.DwmGetWindowAttribute
+    except WindowsError:
+        f = None
+    if f:
+        rect = ctypes.wintypes.RECT()
+        DWMWA_EXTENDED_FRAME_BOUNDS = 9
+        f(ctypes.wintypes.HWND(hwnd),
+          ctypes.wintypes.DWORD(DWMWA_EXTENDED_FRAME_BOUNDS),
+          ctypes.byref(rect),
+          ctypes.sizeof(rect)
+          )
+        return rect.left, rect.top, rect.right, rect.bottom
 
 '''
 import cv2
