@@ -1,3 +1,4 @@
+import time
 import cv2
 import numpy as np
 
@@ -93,7 +94,7 @@ def display_bev_lanes(bevmap, bev_lanes, stop_line, width=2):
 
     return bevmap
 
-def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info):
+def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info, planetrigger):
     cv2.putText(bevmap, 'Infer time: {:.4f}s'.format(refer_time), (10, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=0.5, color=(200, 200, 200), thickness=1)
     cv2.putText(bevmap, "Steer angle: {:.2f}".format((truck.ang - 0.5) * 180), (10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
@@ -133,6 +134,16 @@ def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info):
 
     if state is not None:
         cv2.putText(bevmap, state, (10, 90), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.5, color=(255, 255, 255), thickness=1)
+        
+    if state == 'Passing' or state == 'Follow':
+        t = int(time.time() - planetrigger.t)
+        if t > 45 or t < 0:
+            t = 0
+        cv2.putText(bevmap, "time: {}".format(t), (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.5, color=(255, 255, 255), thickness=1)
+    if state == 'Passing':
+        cv2.putText(bevmap, "passing: {}".format(planetrigger.change_lane_state), (10, 165), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
 
     cv2.putText(bevmap, "weather: {}".format(weather), (10, 105), fontFace=cv2.FONT_HERSHEY_SIMPLEX,

@@ -25,7 +25,7 @@ class Truck:  # 阿克曼转向模型
         self.dt = 0.2  # 决策间隔时间
         self.delta = 0   # 车辆与轨迹夹角
 
-    def update(self, ang, acc, refer_time, speed, info):  # update ugv's state
+    def update(self, ang, acc, refer_time, speed):  # update ugv's state
         self.ang = ang
         self.acc = acc
         self.dv = speed - self.speed

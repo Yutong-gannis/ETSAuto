@@ -22,10 +22,12 @@ class Bev_Lane:  # 封装车道线类
         self.pts = lanes_pts  # 车道线上所有的点
 
 def FCW(nav_line, speed):
-    long = 420 * (1 - speed / 1000 * 10)
+    # 根据速度计算车辆前向物体检测线长度
+    long = 420 * (1 - speed / 100)
     if long < 210:
         long = 210
 
+    # 根据导航线确定车辆前向物体检测线
     bev_lanes = []
     pts_y = np.linspace(long, 470, 20)
     pts_x_L10 = nav_line.fit[0] * pts_y ** 2 + nav_line.fit[1] * pts_y + nav_line.fit[2] - 10

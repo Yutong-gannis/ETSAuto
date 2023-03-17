@@ -28,7 +28,7 @@ class PlanTrigger:
         self.speed_infor = 0  # [0：前车纵向速度低于最低跟踪速度 1：前车纵向速度高于最高跟踪速度，]
         # self.near_lane_infor = [0, 0]  # [0：无左车道 1：有左车道，0：无右车道 1：有右车道]
         self.near_car_infor = [0, 0]  # [0：左侧车道无车辆行驶 1：左相邻车道有车辆行驶，0：右侧车道无车辆行驶 1：右侧车道有车辆行驶]
-        self.t = 0  # 状态时间
+        self.t = 0  # 跟踪和超车时间存储
         self.t_sheld = 1  # [0：不满足车道变换时间阈值 1：满足车道变换时间阈值]
         self.change_lane_state = 0  # [0：不在超车状态 1：驶入超车道 2：超车中 3：准备驶出超车道]
 
@@ -68,8 +68,9 @@ class PlanTrigger:
             elif obstacle.lane == 1 and obstacle.position[1] + obstacle.position[3] >= 420:
                 self.near_car_infor[1] = 1
 
-            elif obstacle.lane == 1 and self.change_lane_state == 2 and obstacle.position[1] + obstacle.position[3] >= detect_range:
-                self.near_car_infor[1] = 1
+            elif obstacle.lane == 1 and obstacle.position[1] + obstacle.position[3] >= detect_range:
+                if self.change_lane_state == 2 or self.change_lane_state == 3:
+                    self.near_car_infor[1] = 1
 
         if self.state_now == 'Passing' and self.change_lane_state == 2 and self.near_car_infor[1] == 0:
             self.t = time.time()
@@ -78,7 +79,7 @@ class PlanTrigger:
         if self.state_now == 'Passing' and self.change_lane_state == 3 and self.near_car_infor[1] == 1:
             self.change_lane_state = 2
 
-    def update_trigger(self, state_now, obstacles, lane, info):
+    def update_trigger(self, state_now, obstacles, lane, info, truck):
         self.update_infor(obstacles, lane)
 
         self.state_now = state_now
@@ -88,7 +89,7 @@ class PlanTrigger:
         elif self.state_now == 'Follow' and self.ego_lane_infor == 0:
             self.state_trigger = 'Follow2Cruise'
             self.t = 0
-        elif self.state_now == 'Follow' and info.roads_type == 1 and self.near_car_infor[0] == 0 and self.t_sheld == 1:
+        elif self.state_now == 'Follow' and info.roads_type == 1 and info.activeAP and truck.speed >= 50 and self.near_car_infor[0] == 0 and self.t_sheld == 1:
             self.state_trigger = 'Follow2Passing'
             self.change_lane_state = 1
         elif self.state_now == 'Passing' and self.ego_lane_infor == 1 and self.t_sheld == 0:

@@ -1,10 +1,8 @@
 '''
 自动驾驶主程序
 '''
-# title_bar_height = 47
-# frame_left_width = 4
-# frame_right_width = 2
-# frame_bottom_height = 2
+
+title_bar_height = 47
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -44,7 +42,7 @@ from BevDraw import draw_bev, print_info
 from Navigation_Process import nav_process
 
 from ocr_tool import speed_detect
-from grab_screen import grab_screen, get_window_rect
+from grab_screen import grab_screen
 import cv2
 import time
 import numpy as np
@@ -54,7 +52,7 @@ from ABS import TTC
 from camera import cam, backcam_left, backcam_right
 from threading import Thread
 import threading
-import win32api, win32gui
+import win32api
 last_time = time.time()
 
 torch.backends.cudnn.benchmark = True
@@ -121,13 +119,7 @@ class MyThread(threading.Thread):
             return None
 
 cipv = None
-img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)
-# window_rect = get_window_rect(win32gui.FindWindow(None, "Euro Truck Simulator 2"))
-# window_rect = (window_rect[0] + frame_left_width,
-#                 window_rect[1] + title_bar_height,
-#                 window_rect[2] - frame_right_width,
-#                 window_rect[3] - frame_bottom_height)
-# img = cv2.resize(cv2.cvtColor(grab_screen(region=window_rect), cv2.COLOR_RGB2BGR), (1360, 768))
+img = cv2.cvtColor(grab_screen(region=(0, title_bar_height, 1359, 767 + title_bar_height)), cv2.COLOR_RGB2BGR)
 im0 = img.copy()
 while True:
     if 'last_time' in locals().keys():
@@ -136,13 +128,7 @@ while True:
         refer_time = 0.18
     last_time = time.time()
 
-    img = cv2.cvtColor(grab_screen(region=(0, 47, 1359, 814)), cv2.COLOR_RGB2BGR)
-    # window_rect = get_window_rect(win32gui.FindWindow(None, "Euro Truck Simulator 2"))
-    # window_rect = (window_rect[0] + frame_left_width,
-    #                 window_rect[1] + title_bar_height,
-    #                 window_rect[2] - frame_right_width,
-    #                 window_rect[3] - frame_bottom_height)
-    # img = cv2.resize(cv2.cvtColor(grab_screen(region=window_rect), cv2.COLOR_RGB2BGR), (1360, 768))
+    img = cv2.cvtColor(grab_screen(region=(0, title_bar_height, 1359, 767 + title_bar_height)), cv2.COLOR_RGB2BGR)
     im0 = img.copy()
 
     # 环境感知
@@ -160,7 +146,7 @@ while True:
     im1 = cv2.resize(cv2.cvtColor(img, cv2.COLOR_RGB2BGR), (1280, 720)).copy()  # 检测结果画布
     im1, obstacles, objs, tracks, traffic_light = yolopredictor.inference(cv2.resize(cv2.cvtColor(img, cv2.COLOR_RGB2BGR), (1280, 720)), CAM, CAM_BL, CAM_BR, im1, vehicle_tracker, tracks, refer_time, conf=0.4)
 
-    # 车道线检测
+    # 车道线检测(暂时取消)
     bev_lanes = []
     '''
     if traffic_light == None:
@@ -169,7 +155,7 @@ while True:
         bev_lanes = []
     '''
 
-    # 变道
+    # 变道处理
     if info.change_lane / 15 != info.change_lane_dest:
         if info.change_lane / 15 < info.change_lane_dest:
             info.change_lane = info.change_lane + 1
@@ -192,7 +178,7 @@ while True:
     speed = speed_detect(ocr, bar, truck.speed)
     speed_limit = curve_speed_limit
 
-    # 车辆前向撞击防护
+    # 车辆前向物体检测线(暂时替代车道线)
     bev_lanes.extend(FCW(nav_line, speed))
 
     # 障碍物及停止线检测
@@ -211,7 +197,7 @@ while True:
 
     # 决策
     if obstacles is not None:
-        state_trigger = planetrigger.update_trigger(fsmplanner.state, obstacles, bev_lanes, info)
+        state_trigger = planetrigger.update_trigger(fsmplanner.state, obstacles, bev_lanes, info, truck)
         if state_trigger is not None:
             fsmplanner.trigger(state_trigger)
             state = fsmplanner.state
@@ -244,13 +230,13 @@ while True:
     else:
         driver(0.5, 0.5)
 
-    truck.update(ang, acc, refer_time, speed, info)
+    truck.update(ang, acc, refer_time, speed)
 
     # BEV绘制
     bevmap = draw_bev(nav_line, obstacles, traffic_light, bev_lanes, stop_line)
     bevmap = bevmap[160:, 160:640, :]
     bevmap = cv2.resize(bevmap, (416, 346))
-    bevmap = print_info(bevmap, refer_time, truck, speed_limit, state, weather, info)
+    bevmap = print_info(bevmap, refer_time, truck, speed_limit, state, weather, info, planetrigger)
 
     img_show = cv2.vconcat([cv2.resize(im1, (416, 234)), bevmap])
     '''
@@ -264,15 +250,20 @@ while True:
     '''
     cv2.imshow('detect', img_show)
 
+    # ctrl+Q退出
     if cv2.waitKey(25) & 0xFF == ord('q') or (win32api.GetAsyncKeyState(0x51) and win32api.GetAsyncKeyState(0x11)):
         cv2.destroyAllWindows()
         driver(0.5, 0.5)
         break
 
+    # 1键退出自动驾驶
     if win32api.GetAsyncKeyState(0x31):
         info.activeAP = False
         info.AP_exit_reason = 0
+        planetrigger.t_sheld = 0
+    # 6键激活自动驾驶及切换道路类型
     if win32api.GetAsyncKeyState(0x36):
+        planetrigger.t_sheld = 0
         if not info.activeAP:
             info.activeAP = True
             info.change_lane_dest = 0
