@@ -41,7 +41,7 @@ class Truck:  # 阿克曼转向模型
 class Info:
     def __init__(self):
         self.activeAP = False  # 是否激活自动驾驶
-        self.roads_type = 0  # 0：普通道路 1：高速公路
+        self.roads_type = 0  # 0：普通道路 1：高速公路 2：高速公路超车速度
         self.road_speed = [50, 50, 45, 40, 30]  # 道路速度
         self.AP_exit_reason = 0  # 自动驾驶退出原因 0：正常退出 1：地图导航获取路线出错
         self.direction = 0  # -2: 左转 -1：左变道 0：直行 1：右变道 2：右转
@@ -60,6 +60,12 @@ class Info:
         elif self.roads_type == 1:
             self.road_speed[0] = 90
             self.road_speed[1] = 90
+            self.road_speed[2] = 80
+            self.road_speed[3] = 70
+            self.road_speed[4] = 60
+        elif self.roads_type == 2:
+            self.road_speed[0] = 95
+            self.road_speed[1] = 95
             self.road_speed[2] = 80
             self.road_speed[3] = 70
             self.road_speed[4] = 60

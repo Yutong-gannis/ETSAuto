@@ -115,7 +115,7 @@ def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info):
     elif info.roads_type == 0:
         cv2.putText(bevmap, "AP: road", (10, 120), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
-    elif info.roads_type == 1:
+    elif info.roads_type == 1 or info.roads_type == 2:
         cv2.putText(bevmap, "AP: highway", (10, 120), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)       
      

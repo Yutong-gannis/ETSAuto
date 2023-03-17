@@ -211,7 +211,7 @@ while True:
 
     # 决策
     if obstacles is not None:
-        state_trigger = planetrigger.update_trigger(fsmplanner.state, obstacles, bev_lanes)
+        state_trigger = planetrigger.update_trigger(fsmplanner.state, obstacles, bev_lanes, info)
         if state_trigger is not None:
             fsmplanner.trigger(state_trigger)
             state = fsmplanner.state
@@ -221,8 +221,21 @@ while True:
     ang = 0.5
 
     acc, ang = Cruise(vertical_pid, horizontal_pid, truck, speed_limit, nav_line, info)
-    if state == 'Follow' and cipv is not None:
+    if (state == 'Follow' or state == 'Passing') and cipv is not None:
         acc = Follow(cipv, vertical_fuzzy, truck)
+    if state == 'Passing':
+        if planetrigger.change_lane_state == 1:
+            info.change_lane_dest = -1
+            if info.change_lane / 15 == info.change_lane_dest:
+                planetrigger.change_lane_state = 2
+        if planetrigger.change_lane_state == 2:
+            info.update(2)
+        if planetrigger.change_lane_state == 3:
+            if time.time() - planetrigger.t >= 4:
+                planetrigger.change_lane_state = 0
+                info.change_lane_dest = 0
+                info.update(1)
+                planetrigger.t_sheld = 0
 
     if info.activeAP:
         driver(ang, acc)
@@ -269,10 +282,6 @@ while True:
                 info.update(1)
             else:
                 info.update(0)
-    if win32api.GetAsyncKeyState(0xDB) and info.change_lane / 15 == info.change_lane_dest:
-            info.change_lane_dest = info.change_lane_dest - 1
-    if win32api.GetAsyncKeyState(0xDD) and info.change_lane / 15 == info.change_lane_dest:
-        info.change_lane_dest = info.change_lane_dest + 1
 
 time.sleep(0.1)
 end()
