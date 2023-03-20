@@ -200,12 +200,15 @@ PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
 - 选项 - 控制，选择 `键盘 + vJoy Device`。
 - 把游戏窗口移动到合适的位置。
 
+### 设置脚本
+
+- title_bar_height设为游戏窗口的标题栏高度
+
 ### 开始使用
 
 - “1”键退出自动驾驶
 - “6”键激活自动驾驶及切换道路类型
 - ctrl+Q退出
-- (环岛及导航线重合时需自行退出并手动驾驶)
 
 # reference
 [CLRNet](https://github.com/Turoad/CLRNet)
