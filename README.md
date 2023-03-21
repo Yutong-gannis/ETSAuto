@@ -171,7 +171,7 @@ True
     trtexec --onnx=./engines/llamas_dla34_tmp.onnx --saveEngine=./engines/llamas_dla34.engine
     ```
     
-- 下载 环境感知pt权重文件
+- 下载环境感知pt权重文件
 
     将[weather_scene_mobilenet_v3_412.pt](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases/download/v1.1dev)移动到Self-driving-Truck-in-Euro-Truck-Simulator2\Perception\SceneClassifier\weights文件夹下
 
