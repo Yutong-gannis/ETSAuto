@@ -170,6 +170,10 @@ True
     polygraphy surgeon sanitize ./engines/llamas_dla34.onnx --fold-constants --output ./engines/llamas_dla34_tmp.onnx
     trtexec --onnx=./engines/llamas_dla34_tmp.onnx --saveEngine=./engines/llamas_dla34.engine
     ```
+    
+- 下载 环境感知pt权重文件
+
+将[weather_scene_mobilenet_v3_412.pt](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases/download/v1.1dev/weather_scene_mobilenet_v3_412.pt)移动到Self-driving-Truck-in-Euro-Truck-Simulator2\Perception\SceneClassifier\weights文件夹下
 
 ### 已测试的环境
 
