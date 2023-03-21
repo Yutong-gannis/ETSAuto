@@ -15,14 +15,13 @@ class Truck:  # 阿克曼转向模型
         self.dtheta = 0
         self.ang = 0
         self.acc = 0
-        self.l = 6.0  # 轴距
-        self.bev_l = 60  # bev下轴距
+        self.l = 12.0  # 轴距
+        self.bev_l = 120  # bev下轴距
+        self.ld = 120  # 预瞄距离
+        self.lf = 160  # 预瞄距离补偿
         self.speed = 0  # 速度
         self.bev_speed = 0  # bev下的速度
         self.dv = 0  # 速度变量
-        self.L = 6.0  # 车辆全长
-        self.k = 1.0
-        self.ld = self.k * self.bev_speed + self.L  # 后轮到观察点距离
         self.dt = 0.2  # 决策间隔时间
         self.delta = 0   # 车辆与轨迹夹角
 
@@ -32,11 +31,44 @@ class Truck:  # 阿克曼转向模型
         self.dv = speed - self.speed
         self.speed = speed
         self.bev_speed = self.speed / 3.6 * 6
-        self.ld = self.k * self.bev_speed + self.bev_l
+        self.ld = 1.0 * self.bev_speed + self.lf
         self.dt = refer_time  # 更新推理时间
         self.dx = self.speed * np.cos(self.theta) * self.dt
         self.dy = self.speed * np.sin(self.theta) * self.dt
         self.dtheta = self.speed * np.tan(self.ang) / self.l * self.dt
+
+
+class Info:
+    def __init__(self):
+        self.activeAP = False  # 是否激活自动驾驶
+        self.roads_type = 0  # 0：普通道路 1：高速公路 2：高速公路超车速度
+        self.road_speed = [50, 50, 45, 40, 30]  # 道路速度
+        self.AP_exit_reason = 0  # 自动驾驶退出原因 0：正常退出 1：地图导航获取路线出错
+        self.direction = 0  # -2: 左转 -1：左变道 0：直行 1：右变道 2：右转
+        self.change_lane = 0  # <0：左变道 0：不变道 >0：右变道
+        self.change_lane_dest = 0  # 变道目标车道
+
+    def update(self, roads_type):  # 更新道路类型
+        self.roads_type = roads_type
+        self.AP_exit_reason = 0
+        if self.roads_type == 0:
+            self.road_speed[0] = 50
+            self.road_speed[1] = 50
+            self.road_speed[2] = 45
+            self.road_speed[3] = 40
+            self.road_speed[4] = 30
+        elif self.roads_type == 1:
+            self.road_speed[0] = 90
+            self.road_speed[1] = 90
+            self.road_speed[2] = 80
+            self.road_speed[3] = 70
+            self.road_speed[4] = 60
+        elif self.roads_type == 2:
+            self.road_speed[0] = 95
+            self.road_speed[1] = 95
+            self.road_speed[2] = 80
+            self.road_speed[3] = 70
+            self.road_speed[4] = 60
 
 
 def driver(ang, acc):

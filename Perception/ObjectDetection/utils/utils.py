@@ -44,7 +44,7 @@ class BaseEngine(object):
         data = [out['host'] for out in self.outputs]
         return data
 
-    def inference(self, origin_img, CAM, CAM_BL, img_show, tracker, tracks, infer_time, conf=0.5):
+    def inference(self, origin_img, CAM, CAM_BL, CAM_BR, img_show, tracker, tracks, infer_time, conf=0.5):
         img, ratio = preproc(origin_img, self.imgsz)
         data = self.infer(img)
         num, final_boxes, final_scores, final_cls_inds = data
@@ -55,7 +55,7 @@ class BaseEngine(object):
         obstacles = None
         traffic_light = None
         if dets is not None and len(dets):
-            obstacles, objs, tracks, traffic_light = postprocess(dets, CAM, CAM_BL, tracker, tracks, infer_time)
+            obstacles, objs, tracks, traffic_light = postprocess(dets, CAM, CAM_BL, CAM_BR, tracker, tracks, infer_time)
             final_boxes, final_scores, final_cls_inds = dets[:, :4], dets[:, 4], dets[:, 5]
             img_show = vis(img_show, final_boxes, final_scores, final_cls_inds, conf=conf,
                             class_names=self.class_names)
