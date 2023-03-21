@@ -12,3 +12,4 @@ transitions
 pycuda
 cython-bbox-windows
 pywin32
+yaml

@@ -42,7 +42,7 @@ class PlanTrigger:
         self.near_car_infor = [0, 0]
 
         for lane in lanes:
-            if lane.position_type == -1:
+            if lane.position_type_ego == -1:
                 detect_range = lane.startpoint[1]
             # if lane.position_type == -2:
             #     self.near_lane_infor[0] == 1
@@ -50,7 +50,8 @@ class PlanTrigger:
             #     self.near_lane_infor[1] == 1
 
         for obstacle in self.obstacles:  # 更新周围汽车信息
-            if obstacle.lane == 0 and obstacle.position[1] + obstacle.position[3] >= detect_range:
+            #if obstacle.lane == 0 and obstacle.position[1] + obstacle.position[3] >= detect_range:
+            if obstacle.lane == 0:
                 self.ego_lane_infor = 1
                 if self.state_now == 'Follow':
                     if 13 < time.time() - self.t < 45:
@@ -68,7 +69,8 @@ class PlanTrigger:
             elif obstacle.lane == 1 and obstacle.position[1] + obstacle.position[3] >= 420:
                 self.near_car_infor[1] = 1
 
-            elif obstacle.lane == 1 and obstacle.position[1] + obstacle.position[3] >= detect_range:
+            #elif obstacle.lane == 1 and obstacle.position[1] + obstacle.position[3] >= detect_range:
+            elif obstacle.lane == 1:
                 if self.change_lane_state == 2 or self.change_lane_state == 3:
                     self.near_car_infor[1] = 1
 

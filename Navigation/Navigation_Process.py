@@ -1,12 +1,14 @@
 import cv2
 import numpy as np
 
+
 class Nav_Line:  # 封装导航线信息
     def __init__(self, fit, pts, pts_x, pts_y):
         self.fit = fit
         self.pts = pts
         self.pts_x = pts_x
         self.pts_y = pts_y
+
 
 def nav_process(nav, truck, info, cipv):
     bev_nav = nav2bev(nav)
@@ -28,6 +30,7 @@ def nav_process(nav, truck, info, cipv):
         curve_speed_limit = 30
     return nav_line, curve_speed_limit
 
+
 def nav2bev(map):  # 将导航地图转化为bev画布
     pts_src = np.float32([
         [  0,   0], [200,   0],
@@ -40,6 +43,7 @@ def nav2bev(map):  # 将导航地图转化为bev画布
     map = cv2.warpPerspective(map, h, (800, 600))
     map = filter_out_red(map)
     return map
+
 
 def filter_out_red(img):
     img_blue = img[:, :, 0]
@@ -56,6 +60,7 @@ def filter_out_red(img):
     _, mask = cv2.threshold(mask, 180, 180, cv2.THRESH_BINARY)
     mask = mask+75
     return mask
+
 
 def get_nav_line(img, truck, info, cipv):
     middle_pts = []
@@ -93,10 +98,10 @@ def get_nav_line(img, truck, info, cipv):
     #     info.road_speed = [30, 30, 30, 30, 30]
     #     turn = [0]
     
-    middle_pts = np.array(middle_pts) # 路线中心线
+    middle_pts = np.array(middle_pts)  # 路线中心线
     if len(middle_pts):
         fit = np.polyfit(np.array([i[1] for i in middle_pts]), np.array([i[0] for i in middle_pts]), 2)
-        pts_y = np.linspace(300, 470, 50)
+        pts_y = np.linspace(410, 470, 30)
         pts_x = fit[0] * pts_y ** 2 + fit[1] * pts_y + fit[2]
     else:
         pts_x = [400]
