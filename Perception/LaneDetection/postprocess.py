@@ -4,21 +4,31 @@ from sklearn.cluster import DBSCAN
 import cv2
 
 
-class Bev_Lane:  # 封装车道线类
-    def __init__(self, cls, position_type, fit, endpoint, startpoint, lanes_pts):
+class Driving_line:
+    def __init__(self, pts, pts_x, pts_y):
+        self.pts = pts
+        self.pts_x = pts_x
+        self.pts_y = pts_y
+
+
+class Bev_Lane:  # 封装车道线类(金丹）
+    def __init__(self, cls, position_type_nav, position_type_ego, fit, endpoint, startpoint, lanes_pts):
         self.cls = cls  # 车道线线型 虚线：0， 实线：1
-        self.position_type = position_type
+        self.position_type_ego = position_type_ego
         ###############车道线类型################
-        # 左边界： -4
-        # 左边第三根车道线：-3
         # 左边第二根（左临近车道的左边界）：-2
         # 当前车道左边界：-1
         # 当前车道中心线：0
         # 当前车道有边界：1
         # 右边第二根（左临近车道的左边界）：2
-        # 右边第三根车道线：3
-        # 右边界：4
-        # 未知车道线：5 未定义前全部设置为5
+        # 位置：5
+        #######################################
+        self.position_type_nav = position_type_nav
+        ###############车道线类型################
+        # 导航车道右边界：1
+        # 导航车道左边界（超车道右边界）：2
+        # 超车道左边界：3
+        # 未知：5
         #######################################
         self.fit = fit  # 三次函数拟合车道线的参数 [a, b, c] 纵是X轴，横是Y轴
         self.endpoint = endpoint  # 远离本车的端点坐标
@@ -26,13 +36,14 @@ class Bev_Lane:  # 封装车道线类
         self.pts = lanes_pts  # 车道线上所有的点
 
 
-def postprocess(img_, output, CAM):
+def postprocess(img_, nav_line, output, CAM):
     lanes_xys = lane2lane_xys(output[0])
     lines_cls = line_classification(img_, lanes_xys)  # 车道线分类
     res, lanes = imshow_lanes(img_, lanes_xys)
     vanish_point = vanish_point_detection(lanes)  # 计算灭点
     bev_lanes = bev_lane(lanes, CAM, lines_cls, vanish_point)
-    bev_lanes = line_positiontype_classfication(bev_lanes)
+    bev_lanes = line_positionegotype_classfication(bev_lanes)
+    bev_lanes = line_positionnavtype_classfication(bev_lanes, nav_line)
     return res, bev_lanes
 
 
@@ -56,7 +67,7 @@ def imshow_lanes(img, lanes_xys, width=4):
     for idx, xys in enumerate(lanes_xys):
         for i in range(1, len(xys)):
             # cv2.line(img, xys[i - 1], xys[i], COLORS[idx], thickness=width)
-            cv2.line(img, xys[i - 1], xys[i], [0, 255, 127], thickness=width)
+            cv2.line(img, tuple(xys[i - 1]), tuple(xys[i]), [0, 255, 127], thickness=width)
 
     '''
     middle_lanes = []  # 计算中线
@@ -79,7 +90,7 @@ def bev_lane(lanes, CAM, lines_cls, vanish_point):
         bev_xy = [] # 拟合前
         for pt in lanes[i]:
             pt = list(pt)
-            pt[1] = 720 - pt[1]
+            pt[1] = 720 - pt[1]  # 到摄像头像素坐标
             bev_pt = CAM.pixel_to_world(pt).tolist()
             if 470 - bev_pt[0][1]/2 <= 250 or 470 - bev_pt[0][1]/2 >= 500:
                 continue
@@ -92,7 +103,7 @@ def bev_lane(lanes, CAM, lines_cls, vanish_point):
             if np.abs(bev_x[j]-400) >= 60: continue
             bev_lane_pts.append((int(bev_x[j]), int(bev_y[j])))
         if len(bev_lane_pts) >= 1: # 之前过滤了一次距离，可能全过滤掉了
-            bev_line = Bev_Lane(lines_cls[i], 5, fit, bev_lane_pts[-1], bev_lane_pts[0], bev_lane_pts)  # 封装bev车道线信息
+            bev_line = Bev_Lane(lines_cls[i], 5, 5, fit, bev_lane_pts[-1], bev_lane_pts[0], bev_lane_pts)  # 封装bev车道线信息
             bev_lanes.append(bev_line)
     return bev_lanes
 
@@ -153,7 +164,7 @@ def middel_line(lanes_xys):
     return middle_lane, []
 
 
-def line_positiontype_classfication(bev_lanes):
+def line_positionegotype_classfication(bev_lanes):
     positiontypes = np.zeros((1, len(bev_lanes)))  # 保存车道线位置类型
     bev_lanes_sorted = [0] * len(bev_lanes)
     if len(bev_lanes) >= 1:
@@ -207,7 +218,7 @@ def line_positiontype_classfication(bev_lanes):
             pts_pre = []
             for pt in pts:
                 pts_pre.append([pt[0]-20, pt[1]])
-            bev_lane_pre = Bev_Lane(0, 1, ego_left_fit, [endpoint[0]-20, endpoint[1]], [startpoint[0]-20, startpoint[1]], pts_pre)
+            bev_lane_pre = Bev_Lane(0, -1, 5, ego_left_fit, [endpoint[0]-20, endpoint[1]], [startpoint[0]-20, startpoint[1]], pts_pre)
             bev_lanes_sorted.append(bev_lane_pre)
 
         if -1 in positiontypes and 1 not in positiontypes and 0 not in positiontypes:  # 只检测出左侧车道时，估计右侧车道
@@ -219,12 +230,48 @@ def line_positiontype_classfication(bev_lanes):
             pts_pre = []
             for pt in pts:
                 pts_pre.append([pt[0]+20, pt[1]])
-            bev_lane_pre = Bev_Lane(0, 1, ego_right_fit, [endpoint[0]+20, endpoint[1]], [startpoint[0]+20, startpoint[1]], pts_pre)
+            bev_lane_pre = Bev_Lane(0, 1, 5, ego_right_fit, [endpoint[0]+20, endpoint[1]], [startpoint[0]+20, startpoint[1]], pts_pre)
             bev_lanes_sorted.append(bev_lane_pre)
 
         for i in range(len(bev_lanes)):
-            bev_lanes_sorted[i].position_type = positiontypes[0, i]
+            bev_lanes_sorted[i].position_type_ego = positiontypes[0, i]
+
+        for i in reversed(range(len(bev_lanes_sorted))):
+            if bev_lanes_sorted[i].position_type_ego not in [-2, -1, 0, 1, 2]:
+                del bev_lanes_sorted[i]
     return bev_lanes_sorted
+
+
+def line_positionnavtype_classfication(bev_lanes, nav_line):
+    if nav_line != None:
+        if len(bev_lanes) >= 1:
+            start_xs = []
+            for bev_lane in bev_lanes:
+                start_x = bev_lane.pts[-3][0]  # bev车道线起点横坐标
+                start_xs.append(start_x-nav_line.pts_x[-1])  # bev车道起点距本车中心线横向距离
+
+            for i in range(len(bev_lanes)):
+                if start_xs[i] >= 0 and start_xs[i] < 20:
+                    bev_lanes[i].position_type_nav = 1
+                elif start_xs[i] >= -20 and start_xs[i] < 0:
+                    bev_lanes[i].position_type_nav = 2
+                elif start_xs[i] >= -40 and start_xs[i] < -20:
+                    bev_lanes[i].position_type_nav = 3
+    return bev_lanes
+
+
+def driving_line_fit(bev_lanes):
+    ego_line = []
+    nav_line = []
+    for bev_lane in bev_lanes:
+        if bev_lane.position_type_ego == -1 or bev_lane.position_type_ego == 1:
+            for i in range(len(bev_lane.pts)):
+                ego_line.append(bev_lane.pts[i])
+
+        if bev_lane.position_type_nav == 1 or bev_lane.position_type_nav == 2:
+            for i in range(len(bev_lane.pts)):
+                nav_line.append(bev_lane.pts[i])
+
 
 
 def line_classification(img, lines):  # 判断虚实线

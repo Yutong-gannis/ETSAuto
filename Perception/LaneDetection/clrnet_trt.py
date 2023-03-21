@@ -67,6 +67,7 @@ class Lane:
         self.curr_iter = 0
         raise StopIteration
 
+
 class CLRNet:
     def __init__(self, engine_path):
         self.logger = trt.Logger(trt.Logger.ERROR)
@@ -261,8 +262,7 @@ class CLRNet:
             
         return decoded
 
-
-    def forward(self, img, im1, CAM):
+    def forward(self, img, nav_line, im1, CAM):
         img = img[self.cut_height:, :, :]
         img = cv2.resize(img, (self.input_width, self.input_height), cv2.INTER_CUBIC)
         img = img.astype(np.float32) / 255.0
@@ -272,12 +272,12 @@ class CLRNet:
         self.context.execute_v2(self.allocations)
         outputs = []
         for out in self.outputs:
-            output = np.zeros(out['shape'],out['dtype'])
+            output = np.zeros(out['shape'], out['dtype'])
             cuda.memcpy_dtoh(output, out['allocation'])
             outputs.append(output)
         output = outputs[0]
         output = self.get_lanes(output)
-        res, bev_lanes = postprocess(im1, output, CAM)
+        res, bev_lanes = postprocess(im1, nav_line, output, CAM)
         return res, bev_lanes
 
 

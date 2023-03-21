@@ -13,7 +13,7 @@ class BaseEngine(object):
                             "traffic sign"]
         logger = trt.Logger(trt.Logger.WARNING)
         runtime = trt.Runtime(logger)
-        trt.init_libnvinfer_plugins(logger,'') # initialize TensorRT plugins
+        trt.init_libnvinfer_plugins(logger, '')  # initialize TensorRT plugins
         with open(engine_path, "rb") as f:
             serialized_engine = f.read()
         engine = runtime.deserialize_cuda_engine(serialized_engine)

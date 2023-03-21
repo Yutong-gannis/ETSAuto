@@ -22,7 +22,7 @@ def draw_ruler(bevmap):
 def draw_nav_line(bevmap, nav_pts):  # 将导航线绘制在BEV
     if len(nav_pts):
         for nav_pt in nav_pts:
-            cv2.circle(bevmap, [int(nav_pt[0]), int(nav_pt[1])], radius=1, color=(0, 0, 0), thickness=-1)
+            cv2.circle(bevmap, (int(nav_pt[0]), int(nav_pt[1])), radius=1, color=(0, 0, 0), thickness=-1)
     return bevmap
 
 
@@ -69,12 +69,12 @@ def display_bev_lanes(bevmap, bev_lanes, stop_line, width=2):
     if len(bev_lanes) >= 1:
         for bev_lane in bev_lanes:
             bev_lane_pts = bev_lane.pts
-            if bev_lane.position_type in [-1.0, 0.0, 1.0]:  # 临近车道线设为重点
+            if bev_lane.position_type_ego in [-1.0, 0.0, 1.0]:  # 临近车道线设为重点
                 width = 2
             else:
                 width = 1
             for i in range(1, len(bev_lane_pts)):
-                cv2.line(bevmap, bev_lane_pts[i - 1], bev_lane_pts[i], [200, 200, 200], thickness=width)
+                cv2.line(bevmap, tuple(bev_lane_pts[i - 1]), tuple(bev_lane_pts[i]), [200, 200, 200], thickness=width)
             '''
             if bev_lane.cls == 1:  # 画实线
                 for i in range(1, len(bev_lane_pts)):
@@ -94,7 +94,7 @@ def display_bev_lanes(bevmap, bev_lanes, stop_line, width=2):
 
     return bevmap
 
-def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info, planetrigger):
+def print_info(bevmap, refer_time, truck, speed_limit, state, weather, scene, timeofday, info, planetrigger):
     cv2.putText(bevmap, 'Infer time: {:.4f}s'.format(refer_time), (10, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=0.5, color=(200, 200, 200), thickness=1)
     cv2.putText(bevmap, "Steer angle: {:.2f}".format((truck.ang - 0.5) * 180), (10, 30), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
@@ -105,48 +105,53 @@ def print_info(bevmap, refer_time, truck, speed_limit, state, weather, info, pla
                 fontScale=0.5, color=(255, 255, 255), thickness=1)
     cv2.putText(bevmap, "power: {:.1f}".format((1-truck.acc)*10), (10, 75), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                 fontScale=0.5, color=(255, 255, 255), thickness=1)
-    
+
+    if state is not None:
+        cv2.putText(bevmap, state, (10, 90), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.5, color=(255, 255, 255), thickness=1)
+
+    cv2.putText(bevmap, "weather: {}".format(weather), (10, 105), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5, color=(255, 255, 255), thickness=1)
+    cv2.putText(bevmap, "scene: {}".format(scene), (10, 120), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5, color=(255, 255, 255), thickness=1)
+    cv2.putText(bevmap, "timeofday: {}".format(timeofday), (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=0.5, color=(255, 255, 255), thickness=1)
 
     if not info.activeAP:
-        cv2.putText(bevmap, "AP: inactive", (10, 120), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "AP: inactive", (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
         if info.AP_exit_reason == 1:
             cv2.putText(bevmap, "AP exited, please take control immediately!!!", (10, 332), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                         fontScale=0.5, color=(0, 0, 255), thickness=1)
     elif info.roads_type == 0:
-        cv2.putText(bevmap, "AP: road", (10, 120), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "AP: road", (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
     elif info.roads_type == 1 or info.roads_type == 2:
-        cv2.putText(bevmap, "AP: highway", (10, 120), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                    fontScale=0.5, color=(255, 255, 255), thickness=1)       
-     
+        cv2.putText(bevmap, "AP: highway", (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                    fontScale=0.5, color=(255, 255, 255), thickness=1)
+
      
     if info.direction == 0:
-        cv2.putText(bevmap, "straight", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "straight", (10, 165), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
     elif info.direction < 0:
-        cv2.putText(bevmap, "left", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "left", (10, 165), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
     elif info.direction > 0:  
-        cv2.putText(bevmap, "right", (10, 135), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "right", (10, 165), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
-            
 
-    if state is not None:
-        cv2.putText(bevmap, state, (10, 90), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                    fontScale=0.5, color=(255, 255, 255), thickness=1)
+
         
     if state == 'Passing' or state == 'Follow':
         t = int(time.time() - planetrigger.t)
         if t > 45 or t < 0:
             t = 0
-        cv2.putText(bevmap, "time: {}".format(t), (10, 150), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "time: {}".format(t), (10, 180), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
     if state == 'Passing':
-        cv2.putText(bevmap, "passing: {}".format(planetrigger.change_lane_state), (10, 165), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(bevmap, "passing: {}".format(planetrigger.change_lane_state), (10, 195), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.5, color=(255, 255, 255), thickness=1)
 
-    cv2.putText(bevmap, "weather: {}".format(weather), (10, 105), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                fontScale=0.5, color=(255, 255, 255), thickness=1)
 
     return bevmap

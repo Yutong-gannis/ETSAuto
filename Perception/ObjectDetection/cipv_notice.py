@@ -6,13 +6,13 @@ def cipv_notice(obstacles, bev_lanes):
         adjacent_left = None
         adjacent_right = None
         for bev_lane in bev_lanes:
-            if bev_lane.position_type == -1:
+            if bev_lane.position_type_ego == -1:
                 ego_left = bev_lane
-            elif bev_lane.position_type == 1:
+            elif bev_lane.position_type_ego == 1:
                 ego_right = bev_lane
-            elif bev_lane.position_type == -2:
+            elif bev_lane.position_type_ego == -2:
                 adjacent_left = bev_lane
-            elif bev_lane.position_type == 2:
+            elif bev_lane.position_type_ego == 2:
                 adjacent_right = bev_lane
         for obstacle in obstacles:
             x = obstacle.position[0] + obstacle.position[2] / 2
