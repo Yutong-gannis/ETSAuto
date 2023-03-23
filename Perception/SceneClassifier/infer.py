@@ -30,7 +30,7 @@ transforms = {
 
 
 def load_weather(device):
-    path = r"D:\autodrive\Perception\SceneClassifier\weights\weather_scene_mobilenet_v3_412.pt"
+    path = current_path + '\\weights\\weather_scene_mobilenet_v3_412.pt'
     model = MultiOutputModel1(5, 2)
     model.load_state_dict(torch.load(path, map_location=device))
     model = model.to(device)

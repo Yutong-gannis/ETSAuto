@@ -128,10 +128,13 @@ Use finite state machine
 ```bash
 # 注意 tensorrt 以及 python 的版本
 python -m pip install $env:TENSORRT_PATH\python\tensorrt-8.4.2.4-cp38-none-win_amd64.whl
+
 # cuda v10.2
 python -m pip install -r requirements.txt
-# cuda v11.7
-# python -m pip install -r requirements_cu117.txt
+# cuda v11.7(cuda为v10.2的忽略此步)
+python -m pip install -r requirements_cu117.txt
+
+python -m pip uninstall -y opencv-python-headless
 python -m pip install -r last_requirements.txt
 ```
 
