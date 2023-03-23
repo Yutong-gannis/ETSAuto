@@ -75,9 +75,9 @@ while True:
         , refer_time, conf=obj_cfg['yolo']['conf'])
     thread1 = MyThread(grab_screen, args=())
     thread1.start()
-    im1, bev_lanes = clrnet.forward(cv2.resize(img, (1280, 720)), nav_line, im1, CAM)  # 传入RGB图像
+    #im1, bev_lanes = clrnet.forward(cv2.resize(img, (1280, 720)), nav_line, im1, CAM)  # 传入RGB图像
     # 车辆前向物体检测线(暂时替代车道线)
-    #bev_lanes.extend(FCW(nav_line, speed))
+    bev_lanes = FCW(nav_line, truck.speed)
     thread1.join()
     img, im0 = thread1.get_result()
     bar = cv2.cvtColor(img[750:768, 545:595, :], cv2.COLOR_RGB2BGR)  # 截取信息条[18, 480, 3]
