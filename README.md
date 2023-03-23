@@ -148,7 +148,7 @@ True
 
 ### 构建 TensorRT 文件
 
-- 下载 [onnx 权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases)，放在 `<PROJECT_PATH>/engines` 文件夹下（手动创建）。
+- 下载 [onnx 权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases)，放在 `<PROJECT_PATH>/Engines` 文件夹下（手动创建）。
 
 - 安装权重转换所依赖的包
 
