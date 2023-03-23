@@ -43,7 +43,7 @@ device = 'cuda:0'
 obj_cfg, vehicle_tracker, ocr, weather_classifier = Perception_init(project_path)
 fsmplanner = Planner_init()
 info, CAM, CAM_BL, CAM_BR, truck, tracks, horizontal_pid, vertical_pid, vertical_fuzzy, M, speed_limit, state, nav_line, intersection_condition, planetrigger = init()
-yolo_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'yolov6s_bdd_300.engine'))
+yolo_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'yolov6s_bdd_60.engine'))
 clrnet_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'llamas_dla34.engine'))
 yolopredictor = YOLOPredictor(engine_path=yolo_engine_path)
 clrnet = CLRNet(clrnet_engine_path)
