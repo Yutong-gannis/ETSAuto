@@ -66,26 +66,27 @@ def display_objects(bevmap, obstacles, traffic_light):
 
 
 def display_bev_lanes(bevmap, bev_lanes, stop_line, width=2):
-    if len(bev_lanes) >= 1:
-        for bev_lane in bev_lanes:
-            bev_lane_pts = bev_lane.pts
-            if bev_lane.position_type_ego in [-1.0, 0.0, 1.0]:  # 临近车道线设为重点
-                width = 2
-            else:
-                width = 1
-            for i in range(1, len(bev_lane_pts)):
-                cv2.line(bevmap, tuple(bev_lane_pts[i - 1]), tuple(bev_lane_pts[i]), [200, 200, 200], thickness=width)
-            '''
-            if bev_lane.cls == 1:  # 画实线
+    if bev_lanes is not None:
+        if len(bev_lanes) >= 1:
+            for bev_lane in bev_lanes:
+                bev_lane_pts = bev_lane.pts
+                if bev_lane.position_type_ego in [-1.0, 0.0, 1.0]:  # 临近车道线设为重点
+                    width = 2
+                else:
+                    width = 1
                 for i in range(1, len(bev_lane_pts)):
-                    cv2.line(bevmap, bev_lane_pts[i - 1], bev_lane_pts[i], [200, 200, 200], thickness=width)
-            else:  # 画虚线
-                #time_now = int(time.time()*100) % 10  # 移动效果，没鸟用
-                for i in range(1, len(bev_lane_pts)):
-                    if i%5 == 1 or i%5 == 2:
-                        continue
-                    cv2.line(bevmap, bev_lane_pts[i - 1], bev_lane_pts[i], [200, 200, 200], thickness=width)
-            '''
+                    cv2.line(bevmap, tuple(bev_lane_pts[i - 1]), tuple(bev_lane_pts[i]), [200, 200, 200], thickness=width)
+                '''
+                if bev_lane.cls == 1:  # 画实线
+                    for i in range(1, len(bev_lane_pts)):
+                        cv2.line(bevmap, bev_lane_pts[i - 1], bev_lane_pts[i], [200, 200, 200], thickness=width)
+                else:  # 画虚线
+                    #time_now = int(time.time()*100) % 10  # 移动效果，没鸟用
+                    for i in range(1, len(bev_lane_pts)):
+                        if i%5 == 1 or i%5 == 2:
+                            continue
+                        cv2.line(bevmap, bev_lane_pts[i - 1], bev_lane_pts[i], [200, 200, 200], thickness=width)
+                '''
 
     if stop_line is not None:
         stop_line_y = stop_line.center_y
