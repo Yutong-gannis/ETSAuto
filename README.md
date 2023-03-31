@@ -1,43 +1,14 @@
-# Self-driving-Truck-in-Euro-Truck-Simulator2
+# ETSAuto
 ### 目录
 + [简介](#简介)
-+ [快速开始](#快速开始)
 + [环境搭建](#如何从零开始构建环境)
 + [开始自动驾驶](#如何自动驾驶)
 + [reference](#reference)
 
 # 简介
-这是一个在欧洲卡车模拟2上运行的辅助驾驶系统。采用YOLOV6进行目标检测，CLRNet进行进行车道线检测，monodepth2进行深度估计，以及利用其他传统方法进行环境感知。在控制方面，采用PID进行横向纵向控制，采用purepursuit进行低速状态下的横向控制，利用有限状态机进行决策场景切换。
+**ETSAuto**是在欧洲卡车模拟2(ETS2)上运行的辅助驾驶系统。采用YOLOV6进行目标检测，CLRNet进行进行车道线检测，以及利用其他方法进行自车和环境感知。在控制方面，采用PID进行横向纵向控制，采用purepursuit进行低速状态下的横向控制，利用有限状态机进行决策场景切换。
 
-This is a self-driving truck test in Euro Truck Simulator2.
-
-### Perception
-Use yolov6 to detect objects, clrnet to detect lane
-
-### Control
-Use PID and pure pursuit to control
-
-### Plan
-Use finite state machine
-
-# 快速开始
-1.开始前，请确保CUDA, cudnn, tensorrt安装完成。没安装的话，请先安装CUDA，CUDA的版本决定cudnn, tensorrt, 以及一些python库的版本。CUDA版本由显卡决定，不一定和我一样，安装尽量高的版本。
-
-2.车道线检测与物体检测的pt文件和onnx文件已提供，PaddleOCR权重文件需前往PaddleOCR官方仓库下载。
-
-3.下载[onnx权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases/tag/v1.0)，tensorrt文件须用onnx文件进行转换。CLRNet权重转换方法可参考[CLRNet-onnxruntime-and-tensorrt-demo](https://github.com/xuanandsix/CLRNet-onnxruntime-and-tensorrt-demo)，YOLOV6转换方法`python tools/export.py -o [onnx文件路径] -e [engine文件路径] --end2end`
-
-例如`python tools/export.py -o yolov6n_bdd_40.onnx -e yolov6n_bdd_40.engine --end2end`
-
-也可参考[TensorRT-For-YOLO-Series](https://github.com/Linaom1214/TensorRT-For-YOLO-Series)。
-
-4.须自行下载vjoy虚拟手柄软件。
-
-5.因为时间原因，未尝试更多的环境，python环境尽量与requirements.txt中保持一致。
-
-6.main.py中设置的根目录设置为自己电脑上的文件根目录。
-
-终端输入`python script/main.py`以运行。
+演示视频：https://www.bilibili.com/video/BV1sT411m7hE/
 
 # 如何从零开始构建环境
 
@@ -171,6 +142,11 @@ True
     trtexec --onnx=./engines/llamas_dla34_tmp.onnx --saveEngine=./engines/llamas_dla34.engine
     ```
     
+    若trtexec生成的engine不可用，可用`tools/onnx2trt.py`进行生成（须修改代码中的路径）。
+    ```bash
+    python ./tools/onnx2trt.py
+    ```
+    
 - 构建 环境感知 的 TensorRT 文件
 
     ```bash
@@ -182,6 +158,7 @@ True
 Windows11 + Python3.8 的条件下在如下环境中运行成功。
 
 - CUDA 10.2 + cuDNN 8.7.0 + TensorRT 8.4.2.4
+- CUDA 11.2 + cuDNN 8.7.0 + TensorRT 8.4.2.4
 - CUDA 11.7 + cuDNN 8.7.0 + TensorRT 8.4.2.4
 - CUDA 11.7 + cuDNN 8.7.0 + TensorRT 8.4.3.1
 
