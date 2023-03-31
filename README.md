@@ -148,7 +148,7 @@ True
 
 ### 构建 TensorRT 文件
 
-- 下载 [onnx 权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases)，放在 `<PROJECT_PATH>/Engines` 文件夹下（手动创建）。
+- 下载 [onnx 权重文件](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases)，放在 `<PROJECT_PATH>/weights` 文件夹下（手动创建）。
 
 - 安装权重转换所依赖的包
 
@@ -171,9 +171,11 @@ True
     trtexec --onnx=./engines/llamas_dla34_tmp.onnx --saveEngine=./engines/llamas_dla34.engine
     ```
     
-- 下载 环境感知pt权重文件
+- 构建 环境感知 的 TensorRT 文件
 
-将[weather_scene_mobilenet_v3_412.pt](https://github.com/Yutong-gannis/Self-driving-Truck-in-Euro-Truck-Simulator2/releases/download/v1.1dev/weather_scene_mobilenet_v3_412.pt)移动到Self-driving-Truck-in-Euro-Truck-Simulator2\Perception\SceneClassifier\weights文件夹下
+    ```bash
+    python ./tools/onnx2trt.py
+    ```
 
 ### 已测试的环境
 
