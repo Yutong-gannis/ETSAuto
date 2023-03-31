@@ -14,7 +14,7 @@ from LaneDetection.clrnet_trt import CLRNet
 from LaneDetection.FCW import FCW
 from SpeedOCR.ocr_tool import speed_detect
 from StopLineDetection.Linedetection import line_filter
-from SceneClassifier.infer import weather_infer
+from SceneClassifier.scene_trt import SceneEngine
 
 planning_path = os.path.abspath(os.path.join(project_path, 'Planning'))
 sys.path.insert(0, planning_path)
@@ -40,13 +40,16 @@ from concurrent.futures import ThreadPoolExecutor
 import win32api
 
 device = 'cuda:0'
-obj_cfg, vehicle_tracker, ocr, weather_classifier = Perception_init(project_path)
+obj_cfg, vehicle_tracker, ocr = Perception_init(project_path)
 fsmplanner = Planner_init()
 info, CAM, CAM_BL, CAM_BR, truck, tracks, horizontal_pid, vertical_pid, vertical_fuzzy, M, speed_limit, state, nav_line, intersection_condition, planetrigger = init()
-yolo_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'yolov6s_bdd_300.engine'))
-clrnet_engine_path = os.path.abspath(os.path.join(project_path, 'Engines', 'llamas_dla34.engine'))
+yolo_engine_path = os.path.abspath(os.path.join(project_path, 'weights', 'yolov6s_bdd_300.engine'))
+clrnet_engine_path = os.path.abspath(os.path.join(project_path, 'weights', 'llamas_dla34.engine'))
+weather_engine_path = os.path.abspath(os.path.join(project_path, 'weights', 'weather_detector.engine'))
 yolopredictor = YOLOPredictor(engine_path=yolo_engine_path)
 clrnet = CLRNet(clrnet_engine_path)
+weather_classifier = SceneEngine(weather_engine_path)
+
 last_time = time.time()
 weather_time = time.time()
 img, im0 = grab_screen()
@@ -88,7 +91,7 @@ while True:
     thread4 = pool.submit(nav_process, cv2.cvtColor(img[610:740, 580:780, :], cv2.COLOR_RGB2BGR), nav_line, info, cipv)
 
     if time.time() - weather_time >= 60:
-        weather, scene = weather_infer(img, weather_classifier)
+        weather, scene = weather_classifier.infer(img, weather_classifier)
         weather_time = time.time()
 
     obstacles, cipv = thread2.result()
