@@ -7,7 +7,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(project_path, 'Perception')))
 from ObjectDetection.yolov6_trt import YOLOPredictor
 from ObjectDetection.ByteTrack.tracker.byte_tracker import BYTETracker
 from LaneDetection.clrnet_trt import CLRNet
-from SceneClassifier.infer import load_weather
 
 sys.path.insert(0, os.path.abspath(os.path.join(project_path, 'Control')))
 from drive import Truck, Info
@@ -32,13 +31,12 @@ def Perception_init(project_path):
 
     ocr = PaddleOCR(enable_mkldnn=True, use_tensorrt=True, use_angle_cls=False, lang="en", use_gpu=False,
                     show_log=False)
-    weather_classifier = load_weather(device)
     with open(os.path.abspath(os.path.join(project_path, 'Perception/ObjectDetection/data/obj.yaml')),
               encoding='utf-8') as f:
         obj_cfg = yaml.load(f, Loader=yaml.FullLoader)
     vehicle_tracker = BYTETracker(obj_cfg['track'])
 
-    return obj_cfg, vehicle_tracker, ocr, weather_classifier
+    return obj_cfg, vehicle_tracker, ocr
 
 
 def Planner_init():
