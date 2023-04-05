@@ -3,7 +3,6 @@ torch==1.10.2+cu102
 tensorrt==8.4.2.4
 paddlepaddle>=1.0.2
 paddleocr==2.6.1.2
-opencv-python>=4.5.5.64
 pyvjoy
 numpy<1.24
 scikit-learn
@@ -12,4 +11,7 @@ transitions
 pycuda
 cython-bbox-windows
 pywin32
-yaml
+pyyaml
+albumentations
+torchvision==0.11.3
+efficientnet_pytorch

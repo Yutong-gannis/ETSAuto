@@ -1,8 +1,11 @@
 import os
 import tensorrt as trt
 
-ONNX_SIM_MODEL_PATH = r"D:\Self-driving-Truck-in-Euro-Truck-Simulator2\weights\weather_detector.onnx"
-TENSORRT_ENGINE_PATH_PY = r"D:\Self-driving-Truck-in-Euro-Truck-Simulator2\weights\weather_detector.engine"
+current_path = os.path.dirname(os.path.abspath(__file__))
+project_path = os.path.abspath(os.path.join(current_path, '..'))
+
+ONNX_SIM_MODEL_PATH = project_path + '\\weights\\weather_detector.onnx'
+TENSORRT_ENGINE_PATH_PY = project_path + '\\weights\\weather_detector.engine'
 
 
 def build_engine(onnx_file_path, engine_file_path, flop=32):
