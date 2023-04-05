@@ -99,6 +99,10 @@ while True:
     nav_line, curve_speed_limit = thread4.result()
     pool.shutdown()
 
+    # 自车状态监控
+    truck = speed_detect(ocr, bar, truck)
+    speed_limit = curve_speed_limit
+
     # 变道处理
     if info.change_lane / 15 != info.change_lane_dest:
         if info.change_lane / 15 < info.change_lane_dest:
@@ -109,28 +113,6 @@ while True:
             info.direction = -1
     else:
         info.direction = 0
-
-    # 导航图处理
-    navmap = cv2.cvtColor(img[610:740, 580:780, :], cv2.COLOR_RGB2BGR)  # 截取导航地图[130, 200, 3]
-    navmap[:, 0:50, :] = np.zeros([130, 50, 3])
-    navmap[:, 150:200, :] = np.zeros([130, 50, 3])
-    nav_line, curve_speed_limit = nav_process(navmap, truck, info, cipv)
-    im1 = np.uint8(im1)
-
-    # 自车状态监控
-    bar = cv2.cvtColor(img[750:768, 545:595, :], cv2.COLOR_RGB2BGR)  # 截取速度条[18, 50, 3]
-    truck = speed_detect(ocr, bar, truck)
-    speed_limit = curve_speed_limit
-
-
-    # 障碍物及停止线检测
-    if traffic_light is not None:
-        if traffic_light.tlcolor == 1 or traffic_light.tlcolor == 2:  # 检测到红灯或黄灯时再检测停止线
-            stop_line = line_filter(cv2.resize(img, (1280, 720)), M, traffic_light)
-        else:
-            stop_line = None
-    else:
-        stop_line = None
 
     # 决策
     if obstacles is not None:
@@ -205,6 +187,7 @@ while True:
     bevmap = cv2.resize(bevmap, (416, 346))
     bevmap = print_info(bevmap, refer_time, truck, speed_limit, state, weather, scene, timeofday, info, planetrigger)
 
+    im1 = np.uint8(im1)
     img_show = cv2.vconcat([cv2.resize(im1, (416, 234)), bevmap])
     cv2.imshow('detect', img_show)
 
