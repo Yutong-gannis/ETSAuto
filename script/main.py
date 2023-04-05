@@ -124,7 +124,6 @@ while True:
 
 
     # 障碍物及停止线检测
-    obstacles, cipv = cipv_notice(obstacles, bev_lanes)
     if traffic_light is not None:
         if traffic_light.tlcolor == 1 or traffic_light.tlcolor == 2:  # 检测到红灯或黄灯时再检测停止线
             stop_line = line_filter(cv2.resize(img, (1280, 720)), M, traffic_light)
