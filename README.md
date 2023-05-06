@@ -130,14 +130,6 @@ True
     python -m pip install -r ./tools/requirements.txt
     ```
 
-- 构建 YOLOV6 的 TensorRT 文件
-
-    ```bash
-    python ./tools/export.py -o ./engines/yolov6s_bdd_60.onnx -e ./engines/yolov6s_bdd_60.engine --end2end
-    ```
-
-    如在命令行中出现 `FP16 is not supported natively on this platform/device` 的提示消息请在命令行后面添加 `-p fp32` 或者 `-p int8`，根据所使用显卡不同而不同。
-
 - 构建 Tensorrt 文件
 
     ```bash
