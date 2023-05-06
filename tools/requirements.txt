@@ -1,0 +1,9 @@
+--extra-index-url https://pypi.ngc.nvidia.com
+nvidia-pyindex
+polygraphy
+onnx-graphsurgeon
+onnxruntime-gpu
+tensorrt==8.4.2.4
+numpy<1.24
+pycuda
+pillow
