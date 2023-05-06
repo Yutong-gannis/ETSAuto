@@ -10,7 +10,7 @@ os.system('python tools/pt2trt/yolo2trt.py -o weights/yolov6s_bdd_60.onnx -e wei
 logging.info("Finish export yolo weight")
 
 logging.info("Start export clrnet weight")
-os.system('polygraphy surgeon sanitize engines/llamas_dla34.onnx --fold-constants --output engines/llamas_dla34_t.onnx')
+os.system('polygraphy surgeon sanitize weights/llamas_dla34.onnx --fold-constants --output weights/llamas_dla34_t.onnx')
 os.system('python tools/pt2trt/onnx2trt.py -o weights/llamas_dla34_t.onnx -e weights/llamas_dla34.engine')
 logging.info("Finish export clrnet weight")
 
