@@ -138,23 +138,14 @@ True
 
     如在命令行中出现 `FP16 is not supported natively on this platform/device` 的提示消息请在命令行后面添加 `-p fp32` 或者 `-p int8`，根据所使用显卡不同而不同。
 
-- 构建 CLRNet 的 TensorRT 文件
+- 构建 Tensorrt 文件
 
     ```bash
-    polygraphy surgeon sanitize ./engines/llamas_dla34.onnx --fold-constants --output ./engines/llamas_dla34_tmp.onnx
-    trtexec --onnx=./engines/llamas_dla34_tmp.onnx --saveEngine=./engines/llamas_dla34.engine
+    python tools/export_trt.py
     ```
-    
-    若trtexec生成的engine不可用，可用`tools/onnx2trt.py`进行生成（须修改代码中的路径）。
-    ```bash
-    python ./tools/onnx2trt.py
-    ```
-    
-- 构建 环境感知 的 TensorRT 文件
 
-    ```bash
-    python ./tools/onnx2trt.py
-    ```
+    如在命令行中出现 `FP16 is not supported natively on this platform/device` 的提示消息请在命令行后面添加 `-p fp32` 或者 `-p int8`，根据所使用显卡不同而不同。笔记本上转换大概需要七分钟左右。
+
 
 ### 已测试的环境
 
