@@ -10,6 +10,8 @@
 
 演示视频：https://www.bilibili.com/video/BV1sT411m7hE/
 
+ETSAuto 2.0dev模型：https://github.com/Yutong-gannis/ETSAuto/tree/v2.0dev
+
 # 如何从零开始构建环境
 
 ### 所依赖的项目简介
