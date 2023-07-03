@@ -182,6 +182,12 @@ PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
 - “6”键激活自动驾驶及切换道路类型
 - ctrl+Q退出
 
+# 赞助
+如果您喜欢这个项目，并希望我继续下去，可以考虑赞助我！感谢所有的爱和支持
+
+![a6x18041cro5ffnvur8sb1c](https://github.com/Yutong-gannis/ETSAuto/assets/69740611/11d36472-3cfa-42bc-b8ef-f71576f872c7)
+
+
 # reference
 [CLRNet](https://github.com/Turoad/CLRNet)
 
