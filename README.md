@@ -15,7 +15,7 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 | 车道保持辅助（LKA） | ✓     |
 | 变道辅助（LCA）     | ✓    |
 | 前向碰撞预警（LCW） | ✗    |
-| 自适应巡航          | ✗    |
+| 自适应巡航（ACC）   | ✗    |
 
 ## 环境搭建
 目前程序仅运行于windows系统，环境搭建请参考[BUILD.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.0dev/BUILD.md)
