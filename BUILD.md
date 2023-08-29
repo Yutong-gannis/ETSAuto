@@ -1,4 +1,4 @@
-# 如何从零开始构建环境
+# 1 如何从零开始构建环境
 
 ### 所依赖的项目简介
 
@@ -115,8 +115,24 @@ Windows11 + Python3.8 的条件下在如下环境中运行成功。
 - CUDA 11.7 + cuDNN 8.7.0 + TensorRT 8.4.3.1
 - CUDA 10.2 + cuDNN 8.7.0
 
-PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
-
+# 2 游戏设置
 ### 安装虚拟手柄
 
 从[项目地址](https://sourceforge.net/projects/vjoystick/)下载 vJoy，双击安装。
+
+### 安装mod
+
+通过创意工坊下载mod
+
+- Google Maps Navigation Night Version
+- SISL's Route Adviser
+
+### 游戏内设置
+
+- 选项 - 图像，取消全屏模式，分辨率设置为 1360x768。
+- 选项 - 控制，选择 `键盘 + vJoy Device`。
+- 选项 - 按键和按钮，将其中小键盘下的**num 0~9**、**Up**、**Down**、**Left**、**Right**设置为取消分配，程序中需要用到这些键。
+- 把游戏窗口移动到屏幕左上角合适的位置，方便程序对屏幕进行获取（注意：左右精调几个像素才能保证车辆行驶在道路正中间）。
+- 按F5把导航地图调成最大。
+
+PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
