@@ -117,8 +117,6 @@ Windows11 + Python3.8 的条件下在如下环境中运行成功。
 
 PS: 修改完系统变量后需要重新打开一个新的 PowerShell。
 
-# 如何自动驾驶
-
 ### 安装虚拟手柄
 
 从[项目地址](https://sourceforge.net/projects/vjoystick/)下载 vJoy，双击安装。
