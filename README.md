@@ -4,8 +4,7 @@
 + [Todo](#Todo)
 
 # 简介
-ETSAuto2将尝试使用基于supercombo的端到端的驾驶决策，并逐渐增加更多功能
-
+ETSAuto2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，ETSAuto 2.0已经实现了车道保持辅助（LKA）和低速状态下的变道辅助（LCA）。
 ### 模型
 将[supercombo模型](https://pan.baidu.com/s/17ofPDsKtQvvGB8iE1YHyow?pwd=ets2)下载到weights目录下。
 
