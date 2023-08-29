@@ -22,10 +22,10 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 目前程序仅运行于windows系统，环境搭建请参考[BUILD.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.0dev/BUILD.md)
 
 ## 使用说明
-### 1 程序入口
+#### 1 程序入口
 双击`ETSAuto.bat`打开程序
 
-### 2 按键说明
+#### 2 按键说明
 为了方便操作，功能采用键盘进行控制
 
 | 按键   | 功能     | 支持  |
