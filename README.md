@@ -12,6 +12,7 @@ ETSAuto2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，ET
 双击`ETSAuto.bat`
 
 # Todo
-- [x] supercombo的感知决策
-- [ ] supercombo后处理优化
-- [ ] 用户可视化及更多功能
+- [x] LCA
+- [ ] LCW
+- [ ] SAS
+- [ ] TLR
