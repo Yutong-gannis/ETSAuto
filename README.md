@@ -11,12 +11,12 @@
 ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，ETSAuto 2已经实现了车道保持辅助（LKA）和低速状态下的变道辅助（LCA）。ETSAuto 2采用纯python语言，运行于windows系统，感知模块采用onnruntime推理（支持TensorRT推理框架），目前支持在Nvidia显卡上进行加速，未来可以支持使用AMD显卡进行加速。
 
 ## 功能
-| 功能               | 支持  |
-| ---                | :---: |
-| 车道保持辅助（LKA） | ✓     |
-| 变道辅助（LCA）     | ✓    |
-| 前向碰撞预警（LCW） | ✗    |
-| 自适应巡航（ACC）   | ✗    |
+| 功能               | 支持  | 说明 |
+| ---                | :---: | --- |
+| 车道保持辅助（LKA） | ✓     | v < 75km/h |
+| 变道辅助（LCA）     | ✓    | v < 50km/h |
+| 前向碰撞预警（LCW） | ✗    |     |
+| 自适应巡航（ACC）   | ✗    |     |
 
 ## 环境搭建
 目前程序仅运行于windows系统，环境搭建请参考[BUILD.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.0dev/BUILD.md)
@@ -36,7 +36,7 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
   | &larr; | 横向控制 | ✓     |     |
   | &rarr; | 纵向控制 | ✓     |     |
   | &uarr; | 辅助驾驶 | ✓     |     |
-  | num 0  | 直行     | ✓     |     |
+  | num 0  | 直行     | ✓     | v < 75km/h |
   | num 1  | 左转     | ✗     |     |
   | num 3  | 右转     | ✗     |     |
   | num 4  | 左变道   | ✓     | v < 50km/h |
