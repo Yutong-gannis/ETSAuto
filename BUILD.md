@@ -105,6 +105,9 @@ Type "help", "copyright", "credits" or "license" for more information.
 True
 ```
 
+### 下载权重文件
+下载 [onnx 权重文件](https://github.com/Yutong-gannis/ETSAuto/releases/tag/untagged-6d929c6606d0e15085e8)，放在 `<PROJECT_PATH>/weights` 文件夹下（手动创建）。
+
 ### 已测试的环境
 
 Windows11 + Python3.8 的条件下在如下环境中运行成功。
