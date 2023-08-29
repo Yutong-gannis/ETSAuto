@@ -62,4 +62,4 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 
 [PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
 
-[Bev-Lanedet](]https://github.com/gigo-team/bev_lane_det)
+[Bev-Lanedet](https://github.com/gigo-team/bev_lane_det)
