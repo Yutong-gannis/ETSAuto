@@ -23,6 +23,11 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 ### 运行
 双击`ETSAuto.bat`
 
+## 赞助
+如果您喜欢这个项目，并希望我继续下去，可以考虑赞助我！感谢所有的爱和支持！
+
+![a6x18041cro5ffnvur8sb1c](https://github.com/Yutong-gannis/ETSAuto/assets/69740611/11d36472-3cfa-42bc-b8ef-f71576f872c7)
+
 ## Todo
 - [x] LCA
 - [ ] LCW
