@@ -25,7 +25,7 @@ ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator
 | Adaptive Cruise Control (ACC)   | ✗ |             |
 
 ## Environment Setup
-For environment setup, refer to [BUILD.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.0dev/BUILD.md)
+For environment setup, refer to [BUILD_en.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.x/BUILD_en.md)
 
 Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Runtime will be mainly used for inference. Nvidia graphics cards are currently supported, and support for AMD graphics cards is planned. However, since there is no AMD graphics card available at the moment, developers are encouraged to attempt building on AMD graphics cards. The project still retains the interface for TensorRT inference to ensure necessary perception response rates. Due to reasons related to screen capture and vjoy control programs, the program currently supports only Windows. Developers are welcome to provide alternative solutions for these two programs on Linux systems.
 
