@@ -1,7 +1,10 @@
-import os.path
-
 import win32api
 import numpy as np
+import pickle
+import os
+current_path = os.path.dirname(os.path.abspath(__file__))
+project_path = os.path.abspath(os.path.join(current_path, '..'))
+from Common.iodata import save_pkl
 
 
 class UserOption:
@@ -41,10 +44,7 @@ class UserOption:
         self.update_desire()
         self.update_power()
 
-    def publish(self, project_path):
-        publish_data = [self.mode, self.desire, self.power]
-        f = open(os.path.join(project_path, "temp/option.txt"), "w")
-        for element in publish_data:
-            f.write(str(element) + ' ')
-        f.close()
+    def publish(self):
+        option_dict = {'mode': self.mode, 'desire': self.desire, 'power': self.power}
+        save_pkl(os.path.join(project_path, 'temp/option.pkl'), option_dict)
 

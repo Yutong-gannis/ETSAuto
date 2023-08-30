@@ -1,15 +1,22 @@
 import os
+import sys
 import re
 import string
+import pickle
 import numpy as np
 from paddleocr import PaddleOCR
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+project_path = os.path.abspath(os.path.join(current_path, '..'))
+sys.path.insert(0, project_path)
+from Common.iodata import save_pkl
 
 
 class SpeedOCR:
     def __init__(self):
         self.speed = 0
         self.over_speed = 0
-        self.ocr = PaddleOCR(enable_mkldnn=True, use_tensorrt=True, use_angle_cls=False, lang="en", use_gpu=False,
+        self.ocr = PaddleOCR(enable_mkldnn=True, use_tensorrt=False, use_angle_cls=False, lang="en", use_gpu=False,
                              show_log=False)
 
     def update(self, bar):
@@ -30,10 +37,6 @@ class SpeedOCR:
         else:
             self.over_speed = 0
 
-    def publish(self, project_path):
-        publish_data = [self.speed, self.over_speed]
-        print(publish_data)
-        f = open(os.path.join(project_path, "temp/speed.txt"), "w")
-        for element in publish_data:
-            f.write(str(element) + ' ')
-        f.close()
+    def publish(self):
+        speed_dict = {'speed': self.speed, 'over_speed': self.over_speed}
+        save_pkl(os.path.join(project_path, 'temp/speed.pkl'), speed_dict)

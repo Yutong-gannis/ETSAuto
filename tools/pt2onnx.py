@@ -1,8 +1,14 @@
 import torch
+import os
+import sys
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+project_path = os.path.abspath(os.path.join(current_path, '..'))
+sys.path.insert(0, project_path)
 from Perception.LaneDetection.model.single_camera_bev import BEV_LaneDet
 
 
-model_path = '../weights/bevlanedet/resnet18_0.5/ep020.pth'
+model_path = '../weights/bevlanedet/resnet18_0.5/ep001.pth'
 input_shape = (240, 360)
 output_2d_shape = (144, 256)
 x_range = (3, 53)

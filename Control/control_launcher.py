@@ -11,57 +11,46 @@ sys.path.insert(0, project_path)
 from drive import Driver
 from Planning.Cruise import Cruise
 from Control.controllers.PID_controller import PID
+from Condition.truck_condition import Truck
 from Planning.bazier_optimizer import point_on_bezier_curve
 from Perception.LaneDetection.transform import trans_translate, trans_rotate
-from Condition.truck_condition import Truck
+from Common.iodata import load_pkl, save_pkl
 
 driver = Driver()
 truck = Truck()
 horizontal_pid = PID(0.3, 0.001, 0.001)  # 初始化横向PID控制算法
 vertical_pid = PID(0.3, 0.0, 0.05)  # 初始化纵向PID控制算法
+line_m = None
 trajectory = None
-option_list = None
-condition_list = None
-speed_list = None
 acc, ang = None, None
 trajectory_change = None
 lane_width = 3.6
 
 while True:
-    try:
-        trajectory = np.load(os.path.join(project_path, 'temp/trajectory.npy'))
-    except ValueError:
-        print('lost trajectory data')
+    lane_dict = load_pkl(os.path.join(project_path, 'temp/line.pkl'))
+    condition_dict = load_pkl(os.path.join(project_path, 'temp/condition.pkl'))
+    option_dict = load_pkl(os.path.join(project_path, 'temp/option.pkl'))
+    speed_dict = load_pkl(os.path.join(project_path, 'temp/speed.pkl'))
 
-    try:
-        condition_file = open(os.path.join(project_path, 'temp/condition.pkl'), 'rb')
-        condition_list = pickle.load(condition_file)
-        condition_file.close()
-    except EOFError:
-        print('lost condition data')
-
-    try:
-        option_list = np.loadtxt(os.path.join(project_path, "temp/option.txt"), dtype=bytes).astype(int)
-    except ValueError:
-        print('lost option data')
-
-    try:
-        speed_list = np.loadtxt(os.path.join(project_path, "temp/speed.txt"), dtype=bytes).astype(float)
-    except ValueError:
-        print('lost speed data')
-
-    if len(speed_list):
-        speed, over_speed = speed_list[0], speed_list[0]
-        truck.speed = speed
+    if lane_dict is not None:
+        line_m = lane_dict['line_m']
+        lane_width = lane_dict['lane_width']
+    if speed_dict is not None:
+        if len(speed_dict):
+            truck.speed = speed_dict['speed']
     if acc is not None and ang is not None:
         truck.update(ang * np.pi * 2, acc, 0.024)
-    if trajectory is not None and option_list is not None and len(option_list):
-        if option_list[1] in [3, 4] and trajectory_change is None:  # 辅助变道规划
+    truck.publish()
+
+    trajectory = line_m
+    if trajectory is not None and option_dict is not None and len(option_dict):
+        if option_dict['desire'] in [3, 4] and trajectory_change is None:  # 辅助变道规划
             defaut_change_distance = 25
-            if option_list[1] == 3:
-                line_target = trajectory - [[0, lane_width]]
+            trajectory_theta = np.arctan((trajectory[3, 1] - trajectory[0, 1]) / (trajectory[3, 0] - trajectory[0, 0]))
+            if option_dict['desire'] == 3:
+                line_target = trajectory - [[-lane_width * np.sin(trajectory_theta), lane_width * np.cos(trajectory_theta)]]
             else:
-                line_target = trajectory + [[0, lane_width]]
+                line_target = trajectory + [[-lane_width * np.sin(trajectory_theta), lane_width * np.cos(trajectory_theta)]]
 
             P0 = [0, 0]
             P1 = trajectory[5, :]
@@ -93,41 +82,38 @@ while True:
                 trajectory_change = None
             trajectory = trajectory_change
 
-    canva = np.zeros([300, 120, 3])
-    if trajectory is not None:
-        for i in range(len(trajectory)):
-            cv2.circle(canva,
-                       (int(trajectory[i][1] * 6 + 120 // 2), int(300 - trajectory[i][0] * 6)),
-                       radius=1,
-                       thickness=-1,
-                       color=(100, 100, 100))
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+        cv2.destroyAllWindows()
+        time.sleep(0.1)
+        break
+
+    np.save(os.path.join(project_path, 'temp/trajectory.npy'), trajectory)
 
     if trajectory is not None:
-        if condition_list is not None:
-            acc, ang = Cruise(vertical_pid, horizontal_pid, condition_list, trajectory)
-        if speed_list is not None and len(speed_list) == 2:
-            if speed_list[1] == 1:
-                acc = 0
+        if condition_dict is not None:
+            acc, ang = Cruise(vertical_pid, horizontal_pid, condition_dict, trajectory)
+        if speed_dict is not None and len(speed_dict) == 2:
+            if speed_dict['over_speed'] == 1:
+                acc = 0.1
         if trajectory_change is not None:
             acc = 0
-        control_list = {'acc': acc, 'ang': ang}
-        control_file = open(os.path.join(project_path, 'temp/control.pkl'), 'wb')
-        pickle.dump(control_list, control_file)
-        control_file.close()
+
+        control_dict = {'acc': acc, 'ang': ang}
+        save_pkl(os.path.join(project_path, 'temp/control.pkl'), control_dict)
 
         time.sleep(0.01)
-        if option_list is not None and len(option_list):
-            if option_list[0] == 0:
+        if option_dict is not None and len(option_dict):
+            if option_dict['mode'] == 0:
                 driver.drive(0.5, 0.5)
-            elif option_list[0] == 1 and ang == ang:
+            elif option_dict['mode'] == 1 and ang == ang:
                 driver.drive(ang + 0.5, 0.5)
-            elif option_list[0] == 2 and acc == acc:
+            elif option_dict['mode'] == 2 and acc == acc:
                 driver.drive(0.5, acc + 0.5)
-            elif option_list[0] == 3 and ang == ang and acc == acc:
+            elif option_dict['mode'] == 3 and ang == ang and acc == acc:
                 driver.drive(ang + 0.5, acc + 0.5)
             else:
                 driver.drive(0.5, 0.5)
-            if option_list[2] == 0:
+            if option_dict['power'] == 0:
                 driver.end()
                 time.sleep(0.1)
                 break
