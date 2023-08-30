@@ -30,7 +30,7 @@ class App(Frame):
         logo = ImageTk.PhotoImage(image=logo)
         self.canvas.create_image(180,180,image=logo)
         self.update()
-        # time.sleep(5)
+        time.sleep(5)
 
         self.btn01=ttk.Button(self.window, text='dev', bootstyle=(INFO, OUTLINE))
         self.btn01.place(x=5, y=30, width=60, height=40)
