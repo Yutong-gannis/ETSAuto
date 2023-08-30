@@ -77,6 +77,9 @@
         python -m pip install numpy<1.24 lap
         ```
 
+### 下载软件
+从[发布页面](https://github.com/Yutong-gannis/ETSAuto/releases)下载最新版本软件到本地电脑。
+
 ### 安装依赖包
 
 在项目根目录下运行以下命令。
