@@ -1,4 +1,7 @@
 # ETSAuto 🚚
+<div align=left>
+<img src="https://github.com/Yutong-gannis/ETSAuto/assets/69740611/9ebe1832-46bc-408a-a2a5-692985454c27" width="400" height="400"/>
+</div>
 
 ### 目录
 + [简介](#简介)
