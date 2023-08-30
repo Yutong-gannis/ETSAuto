@@ -1,4 +1,7 @@
 # ETSAuto 🚚
+![logo1_b](https://github.com/Yutong-gannis/ETSAuto/assets/69740611/8879143a-37f0-4aa4-8cbc-9e3b7d789252)
+
+
 ### 目录
 + [简介](#简介)
 + [环境搭建](#如何从零开始构建环境)
