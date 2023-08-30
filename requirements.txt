@@ -6,3 +6,4 @@ paddleocr
 scipy
 matplotlib
 torchvision
+ttkbootstrap
