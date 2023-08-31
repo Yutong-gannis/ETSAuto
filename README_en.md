@@ -35,7 +35,7 @@
 + [References](#references)
 
 ## Introduction
-ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator 2. ETSAuto 2 has implemented Lane Keeping Assistance (LKA) and Lane Change Assistance (LCA) at low speeds. ETSAuto 2 is developed in pure Python and runs on Windows. The perception module uses ONNX Runtime for inference. Currently, it supports acceleration on Nvidia graphics cards, and future support for AMD graphics cards is planned.
+ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator 2. ETSAuto 2 has implemented Lane Keeping Assistance (LKA) and Lane Change Assistance (LCA) at low speeds. ETSAuto 2 is developed in pure Python and runs on Windows. The perception module uses ONNX Runtime for inference (supporting the TensorRT inference framework). Currently, it supports acceleration on Nvidia graphics cards, and future support for AMD graphics cards is planned.
 
 ## Features
 | Feature               | Support | Description |
@@ -48,7 +48,7 @@ ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator
 ## Environment Setup
 For environment setup, refer to [BUILD_en.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.x/BUILD_en.md)
 
-Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Runtime will be mainly used for inference. Nvidia graphics cards are currently supported, and support for AMD graphics cards is planned. However, since there is no AMD graphics card available at the moment, developers are encouraged to attempt building on AMD graphics cards. Due to reasons related to screen capture and vjoy control programs, the program currently supports only Windows. Developers are welcome to provide alternative solutions for these two codes on Linux systems.
+Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Runtime will be mainly used for inference. Nvidia graphics cards are currently supported, and support for AMD graphics cards is planned. However, since there is no AMD graphics card available at the moment, developers are encouraged to attempt building on AMD graphics cards. The project still retains the interface for TensorRT inference to ensure necessary perception response rates. Due to reasons related to screen capture and vjoy control programs, the program currently supports only Windows. Developers are welcome to provide alternative solutions for these two codes on Linux systems.
 
 ## Usage Instructions
 + Program Entry
