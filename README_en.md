@@ -54,7 +54,14 @@ Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Ru
 ## Sponsorship
 If you like this project and want me to continue, consider sponsoring me! Thanks for all the love and support!
 
++ Alipay
+
 ![a6x18041cro5ffnvur8sb1c](https://github.com/Yutong-gannis/ETSAuto/assets/69740611/11d36472-3cfa-42bc-b8ef-f71576f872c7)
+
++ Wechat
+
+![94214ceaca44085494ab079ce946ad4](https://github.com/Yutong-gannis/ETSAuto/assets/69740611/f455eab6-76f4-4a56-b5a8-5ec313f506f1)
+
 
 ## Plans
 - [x] LCA
