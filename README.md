@@ -1,9 +1,17 @@
-# ETSAuto2 🚚
-<div align=left>
-<img src="https://github.com/Yutong-gannis/ETSAuto/assets/69740611/9ebe1832-46bc-408a-a2a5-692985454c27" width="400" height="400"/>
+<div align="center">
+  <img src="https://github.com/Yutong-gannis/ETSAuto/assets/69740611/9ebe1832-46bc-408a-a2a5-692985454c27" width="400" height="400"/>
+
+  ![build](https://img.shields.io/badge/build-passing-green)
+  ![python3](https://img.shields.io/badge/python3-pass-green)
+  ![docs](https://img.shields.io/badge/docs-latest-blue)
+  ![license](https://img.shields.io/badge/license-MIT-blue)
 </div>
 
+<div align="center">
+    
 简体中文 | [English](https://github.com/Yutong-gannis/ETSAuto/blob/v2.x/README_en.md)
+
+</div>
 
 ### 目录
 - [ETSAuto2 🚚](#etsauto2-)
