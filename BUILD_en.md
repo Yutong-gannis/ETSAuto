@@ -126,6 +126,9 @@ Successfully ran on Windows 11 + Python 3.8 under the following conditions:
 
 Download vJoy from the [project link](https://sourceforge.net/projects/vjoystick/) and install by double-clicking.
 
+### Install Plugins
+In the [thirdparty/ets2-sdk-plugin](https://github.com/Yutong-gannis/ETSAuto/tree/v2.x/thirdparty/ets2-sdk-plugin) directory, choose the WIN32 or WIN64 folder based on your device. Copy the **ets2-telemetry.dll** file from the folder to the `bin/win_x86/plugins` directory in the root installation folder of Euro Truck Simulator 2. If the `plugins` folder doesn't exist, create it manually. Once you start the game, if you see a warning, it indicates that the installation is complete.
+
 ### Install Mods
 
 Download mods from the Steam Workshop:
