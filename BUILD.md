@@ -8,7 +8,7 @@
 
 - CUDA
 
-  [官网地址](https://developer.nvidia.com/cuda-toolkit)， 推荐使用 [10.2](https://developer.nvidia.com/cuda-10.2-download-archive) 版本，次选[11.7.0](https://developer.nvidia.com/cuda-11-7-0-download-archive) 版本，其他版本支持情况未知。版本 `v12.0` 现阶段 `PyTorch` 等依赖的包还未支持。
+  [官网地址](https://developer.nvidia.com/cuda-toolkit)， 推荐使用 [10.2](https://developer.nvidia.com/cuda-10.2-download-archive) 版本，次选[11.7.0](https://developer.nvidia.com/cuda-11-7-0-download-archive) 版本，其他版本支持情况未知。
 
 - cuDNN (For CUDA 11.x, 10.2)
 
