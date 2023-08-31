@@ -5,13 +5,13 @@ import sys
 import math
 import onnxruntime
 import albumentations as A
-from albumentations.pytorch import ToTensorV2
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_path)
 from Perception.LaneDetection.lib.postprocess import sigmoid, bev_instance2points_with_offset_z
 from Perception.LaneDetection.lib.cluster import embedding_post
 from Perception.LaneDetection.lib.normalize import horizontal_rounding, get_skeleton
+
 
 
 class Bev_Lanedet(object):
@@ -31,8 +31,7 @@ class Bev_Lanedet(object):
         self.bev_shape = (
             int((self.x_range[1] - self.x_range[0]) / self.meter_per_pixel), int((self.y_range[1] - self.y_range[0]) / self.meter_per_pixel))
         self.trans_image = A.Compose([A.Resize(height=self.input_shape[0], width=self.input_shape[1]),
-                                      A.Normalize(),
-                                      ToTensorV2()])
+                                      A.Normalize()])
 
         self.post_conf = -0.7  # Minimum confidence on the segmentation map for clustering
         self.post_emb_margin = 6.0  # embeding margin of different clusters
@@ -44,7 +43,7 @@ class Bev_Lanedet(object):
         img = img[50:640, :, :]
         transformed = self.trans_image(image=img)
         img = transformed["image"]
-        img = img.unsqueeze(0).numpy()
+        img = np.expand_dims(img.transpose(2, 0, 1), axis=0)
         return img
 
     def line_completing(self, lines_temp):
