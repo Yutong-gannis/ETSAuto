@@ -16,7 +16,7 @@ from Navigation.Navigation_Process import nav_process
 from Common.iodata import load_pkl, save_pkl
 
 nav_line = None
-lane_path = os.path.abspath(os.path.join(project_path, 'weights/bevlanedet/resnet18_0.5/ep020.onnx'))
+lane_path = os.path.abspath(os.path.join(project_path, 'weights/bevlanedet/resnet18_0.5/ep030.onnx'))
 lanedet = Bev_Lanedet(lane_path)
 plan_register = PlanRegister()
 screengraber = ScreenGraber()
@@ -37,8 +37,6 @@ while True:
     # nav_line = thread3.result()
     line_l, line_r, line_m, lane_width = thread1.result()
     pool.shutdown()
-
-    screengraber.publish(project_path)
 
     if line_m is not None:
         line_m = plan_register.update(line_m)

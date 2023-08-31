@@ -126,6 +126,9 @@ Windows11 + Python3.8 的条件下在如下环境中运行成功。
 
 从[项目地址](https://sourceforge.net/projects/vjoystick/)下载 vJoy，双击安装。
 
+### 安装插件
+ets2-sdk-plugin在thirdparty目录下，根据设备选择WIN32或WIN64，将文件夹下的**ets2-telemetry.dll**复制到欧卡安装根目录下的bin/win_x86/plugins（若没有plugins文件夹，则手动创建）。开启游戏后，若游戏出现警告，则证明安装完成。
+
 ### 安装mod
 
 通过创意工坊下载mod
