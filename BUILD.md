@@ -1,6 +1,6 @@
 # 1 如何从零开始构建环境
 
-### 所依赖的项目简介
+### 1） 环境配置
 
 - Python
 
@@ -33,21 +33,23 @@
     <省略之后的输出>
     ```
 
-### 下载项目
-从[发布页面](https://github.com/Yutong-gannis/ETSAuto/releases)下载项目最新版本到本地电脑。
+### 2）项目安装
++ 下载项目
+  
+  从[发布页面](https://github.com/Yutong-gannis/ETSAuto/releases)下载项目最新版本到本地电脑。
 
-### 安装依赖包
++ 安装依赖包
+  
+  在项目根目录下运行以下命令。
+  ```bash
+  python -m pip install -r requirements.txt
+  ```
 
-在项目根目录下运行以下命令。
++ 下载权重文件
+  
+  下载 [onnx 权重文件](https://github.com/Yutong-gannis/ETSAuto/releases/download/v2.0/ep049.onnx)，放在 `<PROJECT_PATH>/weights` 文件夹下（手动创建）。
 
-```bash
-python -m pip install -r requirements.txt
-```
-
-### 下载权重文件
-下载 [onnx 权重文件](https://github.com/Yutong-gannis/ETSAuto/releases/download/v2.0/ep049.onnx)，放在 `<PROJECT_PATH>/weights` 文件夹下（手动创建）。
-
-### 已测试的环境
+### 3）已测试的环境
 
 Windows11 + Python3.8 的条件下在如下环境中运行成功。
 
@@ -56,21 +58,21 @@ Windows11 + Python3.8 的条件下在如下环境中运行成功。
 - CUDA 11.7 + cuDNN 8.7.0
 
 # 2 游戏设置
-### 安装虚拟手柄
+### 1)安装虚拟手柄
 
 从[项目地址](https://sourceforge.net/projects/vjoystick/)下载 vJoy，双击安装。
 
-### 安装插件
+### 2)安装插件
 在[thirdparty/ets2-sdk-plugin](https://github.com/Yutong-gannis/ETSAuto/tree/v2.x/thirdparty/ets2-sdk-plugin)目录下，根据设备选择WIN32或WIN64文件夹，将文件夹下的**ets2-telemetry.dll**复制到欧卡安装根目录下的bin/win_x86/plugins（若没有plugins文件夹，则手动创建）。开启游戏后，若游戏出现警告，则证明安装完成。
 
-### 安装mod
+### 3)安装mod
 
 通过创意工坊下载mod
 
 - Google Maps Navigation Night Version
 - SISL's Route Adviser
 
-### 游戏内设置
+### 4)游戏内设置
 
 - 选项 - 图像，取消全屏模式，分辨率设置为 1360x768。
 - 选项 - 控制，选择 `键盘 + vJoy Device`。
