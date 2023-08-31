@@ -1,9 +1,29 @@
-# ETSAuto2 🚚
-<div align=left>
-<img src="https://github.com/Yutong-gannis/ETSAuto/assets/69740611/9ebe1832-46bc-408a-a2a5-692985454c27" width="400" height="400"/>
+<div align="center">
+  <img src="https://github.com/Yutong-gannis/ETSAuto/assets/69740611/9ebe1832-46bc-408a-a2a5-692985454c27" width="400" height="400"/>
+
+  ![GitHub](https://img.shields.io/github/license/Yutong-gannis/ETSAuto)
+  ![build](https://img.shields.io/badge/build-passing-green)
+  ![python3](https://img.shields.io/badge/python3-pass-green)
+  ![pr](https://img.shields.io/badge/PRs-welcome-brightgreen)
+  ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/Yutong-gannis/ETSAuto)
+  ![docs](https://img.shields.io/badge/docs-latest-blue)
+  ![GitHub Repo stars](https://img.shields.io/github/stars/Yutong-gannis/ETSAuto)
+  ![languages](https://img.shields.io/github/languages/top/yutong-gannis/ETSAuto)
+  ![GitHub forks](https://img.shields.io/github/forks/Yutong-gannis/ETSAuto)
+  
+  ![GitHub release (with filter)](https://img.shields.io/github/v/release/Yutong-gannis/ETSAuto)
+  ![GitHub tag (with filter)](https://img.shields.io/github/v/tag/Yutong-gannis/ETSAuto)
+  ![GitHub issues](https://img.shields.io/github/issues/Yutong-gannis/ETSAuto)
+  ![GitHub closed issues](https://img.shields.io/github/issues-closed/Yutong-gannis/ETSAuto)
+  ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/Yutong-gannis/ETSAuto)
+
 </div>
 
+<div align="center">
+
 [简体中文](https://github.com/Yutong-gannis/ETSAuto/blob/v2.x/README.md) | English
+
+</div>
 
 ### Table of Contents
 + [Introduction](#introduction)
