@@ -14,7 +14,11 @@
 
   [Version 8.7 Download](https://developer.nvidia.com/rdp/cudnn-download) - Match the version with CUDA. For installation instructions, refer to the [cuDNN Installation Guide](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html).
 
-- For CUDA AND cuDNN, configure the system's Path based on their respective official documentation.
+- TensorRT (For CUDA 11.x, 10.2) (Optional)
+
+  [Version 8.x Download](https://developer.nvidia.com/nvidia-tensorrt-8x-download) - Match the version with CUDA. Recommend using `8.4.2.4 (TensorRT 8.4 GA Update 1)`. For installation instructions, refer to the [TensorRT Installation Guide](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html).
+
+- For CUDA, cuDNN, and TensorRT (Optional), configure the system's Path based on their respective official documentation.
 
 - Reopen PowerShell and enter the following commands to verify successful configuration:
 
