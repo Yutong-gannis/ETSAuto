@@ -14,11 +14,7 @@
 
   [8.7 下载地址](https://developer.nvidia.com/rdp/cudnn-download)，跟CUDA版本匹配。其他介绍请参照 [cuDNN 安装手册](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html)。
 
-- TensorRT (For CUDA 11.x, 10.2)（可选）
-
-  [8.x 下载地址](https://developer.nvidia.com/nvidia-tensorrt-8x-download)，跟CUDA版本匹配，推荐使用 `8.4.2.4(TensorRT 8.4 GA Update 1)` 版本。其他介绍请参照 [TensorRT 安装手册](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html)。
-
-- CUDA、cuDNN、TensorRT（可选） 请结合各自官方文档自行配置系统的 Path。
+- CUDA、cuDNN 请结合各自官方文档自行配置系统的 Path。
 
 - 重新打开 PowerShell ，输入以下命令查看环境是否配置成功。
 
@@ -37,75 +33,15 @@
     <省略之后的输出>
     ```
 
-- 稍微介绍一下几个依赖包的版本情况
-
-    - PyTorch
-
-        CUDA 是 10.2 的话，windows 下最高支持的版本为 `1.10.2+cu102`。
-
-        ```bash
-        python -m pip install torch==1.10.2+cu102 --extra-index-url https://download.pytorch.org/whl/cu102
-        ```
-
-        CUDA 是 11.7 的话可以使用 `1.13.1+cu117`。
-
-        ```bash
-        python -m pip install torch --extra-index-url https://download.pytorch.org/whl/cu117
-        ```
-
-    - numpy
-        ```bash
-        python -m pip install numpy
-        ```
-
-    - tensorrt
-
-        依赖包请从tensorrt的所在文件夹中进行安装。
-
-        ```bash
-        # 注意这是在 windows 的 PowerShell 下的写法
-        python -m pip install $env:TENSORRT_PATH\python\tensorrt-8.4.2.4-cp38-none-win_amd64.whl
-        ```
-
-        `TENSORRT_PATH` 为系统环境变量，`8.4.2.4` 为 `TensorRT` 的版本，`cp38` 与 安装的 `python` 的版本一致。
-
-    - lap
-
-        需要先安装 numpy 成功之后才能安装该依赖包。
-
-        ```bash
-        python -m pip install numpy<1.24 lap
-        ```
-
-### 下载软件
-从[发布页面](https://github.com/Yutong-gannis/ETSAuto/releases)下载最新版本软件到本地电脑。
+### 下载项目
+从[发布页面](https://github.com/Yutong-gannis/ETSAuto/releases)下载项目最新版本到本地电脑。
 
 ### 安装依赖包
 
 在项目根目录下运行以下命令。
 
 ```bash
-# 注意 tensorrt 以及 python 的版本
-python -m pip install $env:TENSORRT_PATH\python\tensorrt-8.4.2.4-cp38-none-win_amd64.whl
-
-# cuda v10.2
 python -m pip install -r requirements.txt
-# cuda v11.7(cuda为v10.2的忽略此步)
-python -m pip install -r requirements_cu117.txt
-
-python -m pip uninstall -y opencv-python-headless
-python -m pip install -r last_requirements.txt
-```
-
-查看 PyTorch 是否为 cuda 版本。
-
-```
-PS C:\> python
-Python 3.8.10 (tags/v3.8.10:3d8993a, May  3 2021, 11:48:03) [MSC v.1928 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
->>> import torch
->>> torch.cuda.is_available()
-True
 ```
 
 ### 下载权重文件
@@ -115,11 +51,9 @@ True
 
 Windows11 + Python3.8 的条件下在如下环境中运行成功。
 
-- CUDA 10.2 + cuDNN 8.7.0 + TensorRT 8.4.2.4
-- CUDA 11.2 + cuDNN 8.7.0 + TensorRT 8.4.2.4
-- CUDA 11.7 + cuDNN 8.7.0 + TensorRT 8.4.2.4
-- CUDA 11.7 + cuDNN 8.7.0 + TensorRT 8.4.3.1
 - CUDA 10.2 + cuDNN 8.7.0
+- CUDA 11.2 + cuDNN 8.7.0
+- CUDA 11.7 + cuDNN 8.7.0
 
 # 2 游戏设置
 ### 安装虚拟手柄
