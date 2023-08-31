@@ -30,6 +30,7 @@
 + [Features](#features)
 + [Environment Setup](#environment-setup)
 + [Usage Instructions](#usage-instructions)
++ [Sponsorship](#sponsorship)
 + [Plans](#plans)
 + [References](#references)
 
