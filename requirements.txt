@@ -1,6 +1,7 @@
 numpy
 opencv-python
 torch
+onnxruntime-gpu
 torchvision
 pyvjoy
 scipy
