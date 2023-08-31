@@ -14,7 +14,11 @@
 
   [8.7 下载地址](https://developer.nvidia.com/rdp/cudnn-download)，跟CUDA版本匹配。其他介绍请参照 [cuDNN 安装手册](https://docs.nvidia.com/deeplearning/cudnn/install-guide/index.html)。
 
-- CUDA、cuDNN 请结合各自官方文档自行配置系统的 Path。
+- TensorRT (For CUDA 11.x, 10.2)（可选）
+
+  [8.x 下载地址](https://developer.nvidia.com/nvidia-tensorrt-8x-download)，跟CUDA版本匹配，推荐使用 `8.4.2.4(TensorRT 8.4 GA Update 1)` 版本。其他介绍请参照 [TensorRT 安装手册](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html)。
+
+- CUDA、cuDNN、TensorRT（可选） 请结合各自官方文档自行配置系统的 Path。
 
 - 重新打开 PowerShell ，输入以下命令查看环境是否配置成功。
 
