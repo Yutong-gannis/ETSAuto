@@ -15,7 +15,7 @@ from Navigation.Navigation_Process import nav_process
 from Common.iodata import load_pkl, save_pkl
 
 nav_line = None
-lane_path = os.path.abspath(os.path.join(project_path, 'weights/bevlanedet/resnet18_0.5_new/ep049.onnx'))
+lane_path = os.path.abspath(os.path.join(project_path, 'weights/ep049.onnx'))
 lanedet = Bev_Lanedet(lane_path)
 screengraber = ScreenGraber()
 fps = 0.06
