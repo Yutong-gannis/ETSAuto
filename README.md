@@ -41,7 +41,7 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 | 功能               | 支持  | 说明 |
 | ---                | :---: | --- |
 | 车道保持辅助（LKA） | ✓     | v < 75km/h |
-| 变道辅助（LCA）     | ✓    | v < 50km/h |
+| 变道辅助（LCA）     | ✓    | v < 70km/h |
 | 前向碰撞预警（LCW） | ✗    |     |
 | 自适应巡航（ACC）   | ✗    |     |
 
@@ -97,3 +97,5 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 [pyvjoy](https://github.com/tidzo/pyvjoy)
 
 [Bev-Lanedet](https://github.com/gigo-team/bev_lane_det)
+
+[ets2-sdk-plugin](https://github.com/nlhans/ets2-sdk-plugin)
