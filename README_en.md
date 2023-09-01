@@ -68,8 +68,8 @@ Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Ru
   | num 0    | Straight  | ✓       | v < 75km/h  |
   | num 1    | Left Turn | ✗       |             |
   | num 3    | Right Turn| ✗       |             |
-  | num 4    | Left Lane Change | ✓ | v < 50km/h  |
-  | num 6    | Right Lane Change | ✓ | v < 50km/h |
+  | num 4    | Left Lane Change | ✓ | v < 70km/h  |
+  | num 6    | Right Lane Change | ✓ | v < 70km/h |
   | ctrl+q   | Exit      | ✓       |             |
 
 ## Sponsorship
@@ -95,3 +95,5 @@ If you like this project and want me to continue, consider sponsoring me! Thanks
 [pyvjoy](https://github.com/tidzo/pyvjoy)
 
 [Bev-Lanedet](https://github.com/gigo-team/bev_lane_det)
+
+[ets2-sdk-plugin](https://github.com/nlhans/ets2-sdk-plugin)
