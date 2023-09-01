@@ -26,7 +26,7 @@ class App(Frame):
     def createwedget(self):
         self.canvas=Canvas(self, width=360,height=360, bg="black")
         self.canvas.pack()
-        logo = Image.open(project_path + "/Assets/logo/300x300/logo1.png").resize((360, 360))
+        logo = Image.open(os.path.join(project_path, "Assets/logo/300x300/logo1.png")).resize((360, 360))
         logo = ImageTk.PhotoImage(image=logo)
         self.canvas.create_image(180,180,image=logo)
         self.update()
