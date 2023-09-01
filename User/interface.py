@@ -67,8 +67,8 @@ class DevInterface:
         self.mode_dic = {0: 'Manual', 1: 'Lateral Control', 2: 'Longitudinal Control', 3: 'AP'}
         self.desire = 0
         self.desire_dic = {0: 'Direct', 1: 'True Left', 2: 'Turn Right', 3: 'Left Lane Change', 4: 'Right Lane Change'}
-        self.K = 6  # 放大系数
-        self.shape = (50 * self.K, 20 * self.K)
+        self.K = 10  # 放大系数
+        self.shape = (30 * self.K, 12 * self.K)
         self.font = cv2.FONT_HERSHEY_SIMPLEX
 
     def update(self, option_dict, truck):
