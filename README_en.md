@@ -9,8 +9,8 @@
   ![docs](https://img.shields.io/badge/docs-latest-blue)
   ![GitHub Repo stars](https://img.shields.io/github/stars/Yutong-gannis/ETSAuto)
   ![languages](https://img.shields.io/github/languages/top/yutong-gannis/ETSAuto)
-  ![GitHub forks](https://img.shields.io/github/forks/Yutong-gannis/ETSAuto)
   
+  ![GitHub forks](https://img.shields.io/github/forks/Yutong-gannis/ETSAuto)
   ![GitHub release (with filter)](https://img.shields.io/github/v/release/Yutong-gannis/ETSAuto)
   ![GitHub tag (with filter)](https://img.shields.io/github/v/tag/Yutong-gannis/ETSAuto)
   ![GitHub issues](https://img.shields.io/github/issues/Yutong-gannis/ETSAuto)
