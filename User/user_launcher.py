@@ -46,7 +46,7 @@ while True:
     info_canva, scene_canva = dev_interface.show(line_l, line_r, trajectory, option_dict, condition_dict, round(sum(fps_list) / 10, 1))
     line_l, line_r, trajectory = None, None, None
     
-    logo = Image.open(r"D:\ETSAuto4.0/Assets/logo/300x300/logo1.png").resize((360, 360))
+    logo = Image.open(os.path.join(project_path, "Assets/logo/300x300/logo1.png")).resize((360, 360))
     logo = ImageTk.PhotoImage(image=logo)
     app.canvas.create_image(180, 180, image=logo)
 
