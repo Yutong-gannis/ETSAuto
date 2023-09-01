@@ -41,7 +41,7 @@ ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator
 | Feature               | Support | Description |
 | ---                   | :---:   | ---         |
 | Lane Keeping (LKA)    | ✓       | v < 75km/h  |
-| Lane Change (LCA)     | ✓       | v < 50km/h  |
+| Lane Change (LCA)     | ✓       | v < 70km/h  |
 | Forward Collision Warning (LCW) | ✗ |             |
 | Adaptive Cruise Control (ACC)   | ✗ |             |
 
@@ -93,7 +93,5 @@ If you like this project and want me to continue, consider sponsoring me! Thanks
 
 ## References
 [pyvjoy](https://github.com/tidzo/pyvjoy)
-
-[PaddleOCR](https://github.com/PaddlePaddle/PaddleOCR)
 
 [Bev-Lanedet](https://github.com/gigo-team/bev_lane_det)
