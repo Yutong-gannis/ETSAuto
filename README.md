@@ -35,15 +35,15 @@
   - [参考](#参考)
 
 ## 简介
-ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，ETSAuto 2已经实现了车道保持辅助（LKA）和低速状态下的变道辅助（LCA）。ETSAuto 2采用纯python语言，运行于windows系统，感知模块采用onnruntime推理（支持TensorRT推理框架），目前支持在Nvidia显卡上进行加速，未来可以支持使用AMD显卡进行加速。在感知方面，我们已经实现了低于0.05ms的感知响应频率。采用purepersuit对卡车进行控制。
+ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，ETSAuto 2已经实现了车道居中控制（LCC）和自动变道辅助（ALC）。ETSAuto 2采用纯python语言，运行于windows系统，感知模块采用onnruntime推理（支持TensorRT推理框架），目前支持在Nvidia显卡上进行加速，未来可以支持使用AMD显卡进行加速。在感知方面，我们已经实现了低于0.05ms的感知响应频率。采用purepersuit对卡车进行控制。
 
 ## 功能
-| 功能               | 支持  | 说明 |
-| ---                | :---: | --- |
-| 车道保持辅助（LKA） | ✓     | v < 75km/h |
-| 变道辅助（LCA）     | ✓    | v < 70km/h |
-| 前向碰撞预警（LCW） | ✗    |     |
-| 自适应巡航（ACC）   | ✗    |     |
+| 功能              | 支持  | 说明 |
+| ---               | :---: | --- |
+| 车道居中控制（LCC）| ✓     | v < 75km/h |
+| 自动变道辅助（ALC）| ✓    | v < 70km/h |
+| 前向碰撞预警（LCW）| ✗    |     |
+| 自适应巡航（ACC）  | ✗    |     |
 
 ## 环境搭建
 环境搭建请参考[BUILD.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.0dev/BUILD.md)
@@ -87,8 +87,8 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 
 
 ## 计划
-- [x] LCA
-- [x] LKA
+- [x] LCC
+- [x] ALC
 - [ ] LCW
 - [ ] SAS
 - [ ] TLR
