@@ -35,13 +35,13 @@
 + [References](#references)
 
 ## Introduction
-ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator 2. ETSAuto 2 has implemented Lane Keeping Assistance (LKA) and Lane Change Assistance (LCA) at low speeds. ETSAuto 2 is developed in pure Python and runs on Windows. The perception module uses ONNX Runtime for inference (supporting the TensorRT inference framework). Currently, it supports acceleration on Nvidia graphics cards, and future support for AMD graphics cards is planned.
+ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator 2. ETSAuto 2 has implemented Lane Centering Control (LCC) and Auto Lane Change (ALC). ETSAuto 2 is developed in pure Python and runs on Windows. The perception module uses ONNX Runtime for inference (supporting the TensorRT inference framework). Currently, it supports acceleration on Nvidia graphics cards, and future support for AMD graphics cards is planned.
 
 ## Features
-| Feature               | Support | Description |
-| ---                   | :---:   | ---         |
-| Lane Keeping (LKA)    | ✓       | v < 75km/h  |
-| Lane Change (LCA)     | ✓       | v < 70km/h  |
+| Feature                         | Support | Description |
+| ---                             | :---:   | ---         |
+| Lane Centering Control (LCC)    | ✓       | v < 75km/h  |
+| Auto Lane Change (ALC)          | ✓       | v < 70km/h  |
 | Forward Collision Warning (LCW) | ✗ |             |
 | Adaptive Cruise Control (ACC)   | ✗ |             |
 
@@ -85,8 +85,8 @@ If you like this project and want me to continue, consider sponsoring me! Thanks
 
 
 ## Plans
-- [x] LCA
-- [x] LKA
+- [x] LCC
+- [x] ALC
 - [ ] LCW
 - [ ] SAS
 - [ ] TLR
