@@ -64,7 +64,7 @@ Windows11 + Python3.8 的条件下在如下环境中运行成功。
 # 2 游戏设置
 ### 1)安装虚拟手柄
 
-从[项目地址](https://sourceforge.net/projects/vjoystick/)下载 vJoy，双击安装。
+从[项目地址](https://sourceforge.net/projects/vjoystick/)下载 vJoy，双击安装。安装过程中，会提示重启，请按要求重启并完成剩余安装操作。
 
 ### 2)安装插件
 在[thirdparty/ets2-sdk-plugin](https://github.com/Yutong-gannis/ETSAuto/tree/v2.x/thirdparty/ets2-sdk-plugin)目录下，根据设备选择WIN32或WIN64文件夹，将文件夹下的**ets2-telemetry.dll**复制到欧卡安装根目录下的bin/win_x86/plugins（若没有plugins文件夹，则手动创建）。开启游戏后，若游戏出现警告，则证明安装完成。
