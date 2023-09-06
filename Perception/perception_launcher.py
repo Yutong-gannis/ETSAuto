@@ -17,8 +17,8 @@ from Perception.Navigation.Navigation_Process import nav_process
 from Common.iodata import load_pkl, save_pkl
 
 nav_line = None
-lane_path = os.path.abspath(os.path.join(project_path, 'weights/bevlanedet/ep049.onnx'))
-yolo_path = os.path.abspath(os.path.join(project_path, 'weights/yolov8/best.onnx'))
+lane_path = os.path.abspath(os.path.join(project_path, 'weights/bevlanedet.onnx'))
+yolo_path = os.path.abspath(os.path.join(project_path, 'weights/yolov8n.onnx'))
 lanedet = Bev_Lanedet(lane_path)
 yolodet = YOLOv8(yolo_path)
 screengraber = ScreenGraber()
