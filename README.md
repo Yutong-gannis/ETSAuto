@@ -2,7 +2,6 @@
   <img src="https://github.com/Yutong-gannis/ETSAuto/assets/69740611/9ebe1832-46bc-408a-a2a5-692985454c27" width="400" height="400"/>
 
   ![GitHub](https://img.shields.io/github/license/Yutong-gannis/ETSAuto)
-  ![build](https://img.shields.io/badge/build-passing-green)
   ![python3](https://img.shields.io/badge/python3-pass-green)
   ![pr](https://img.shields.io/badge/PRs-welcome-brightgreen)
   ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/Yutong-gannis/ETSAuto)
@@ -35,7 +34,7 @@
   - [参考](#参考)
 
 ## 简介
-ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，ETSAuto 2已经实现了车道居中控制（LCC）和自动变道辅助（ALC）。ETSAuto 2采用纯python语言，运行于windows系统，感知模块采用onnruntime推理（支持TensorRT推理框架），目前支持在Nvidia显卡上进行加速，未来可以支持使用AMD显卡进行加速。在感知方面，我们已经实现了低于0.05ms的感知响应频率。采用purepersuit对卡车进行控制。
+ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，ETSAuto 2已经实现了车道居中控制（LCC）、自动变道辅助（ALC）、前向碰撞预警（FCW）。ETSAuto 2采用纯python语言，运行于windows系统，感知模块采用onnruntime推理（支持TensorRT推理框架），目前支持在Nvidia显卡上进行加速，未来可以支持使用AMD显卡进行加速。在感知方面，我们已经实现了低于0.05ms的感知响应频率。采用purepersuit对卡车进行控制。
 
 ## 功能
 | 场景     | 支持 | 说明 |
@@ -51,7 +50,7 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 | ---               | :---: | --- |
 | 车道居中控制（LCC）| ✓    | v < 80km/h |
 | 自动变道辅助（ALC）| ✓    | v < 80km/h |
-| 前向碰撞预警（LCW）| ✗    |     |
+| 前向碰撞预警（LCW）| ✓    |     |
 | 自适应巡航（ACC）  | ✗    |     |
 
 ## 环境搭建
@@ -98,7 +97,9 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
 ## 计划
 - [x] LCC
 - [x] ALC
-- [ ] LCW
+- [x] LCW
+- [ ] ACC
+- [ ] AEB
 - [ ] SAS
 - [ ] TLR
 
