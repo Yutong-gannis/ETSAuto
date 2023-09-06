@@ -2,7 +2,6 @@
   <img src="https://github.com/Yutong-gannis/ETSAuto/assets/69740611/9ebe1832-46bc-408a-a2a5-692985454c27" width="400" height="400"/>
 
   ![GitHub](https://img.shields.io/github/license/Yutong-gannis/ETSAuto)
-  ![build](https://img.shields.io/badge/build-passing-green)
   ![python3](https://img.shields.io/badge/python3-pass-green)
   ![pr](https://img.shields.io/badge/PRs-welcome-brightgreen)
   ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/Yutong-gannis/ETSAuto)
@@ -35,15 +34,23 @@
 + [References](#references)
 
 ## Introduction
-ETSAuto 2 is a truck-assistance driving system that runs on Euro Truck Simulator 2. ETSAuto 2 has implemented Lane Centering Control (LCC) and Auto Lane Change (ALC). ETSAuto 2 is developed in pure Python and runs on Windows. The perception module uses ONNX Runtime for inference (supporting the TensorRT inference framework). Currently, it supports acceleration on Nvidia graphics cards, and future support for AMD graphics cards is planned.
+ETSAuto 2 is an autonomous driving system for Euro Truck Simulator 2, which includes Lane Centering Control (LCC), Lane Change Assistance (ALC), and Forward Collision Warning (FCW) features. ETSAuto 2 is written in pure Python and runs on Windows systems. It uses the ONNX Runtime for inference (supports the TensorRT inference framework) and currently offers acceleration on Nvidia GPUs, with future support for AMD GPUs. In terms of perception, it achieves a response rate of less than 0.05ms and uses pure pursuit for vehicle control.
 
 ## Features
-| Feature                         | Support | Description |
-| ---                             | :---:   | ---         |
-| Lane Centering Control (LCC)    | ✓       | v < 75km/h  |
-| Auto Lane Change (ALC)          | ✓       | v < 70km/h  |
-| Forward Collision Warning (LCW) | ✗ |             |
-| Adaptive Cruise Control (ACC)   | ✗ |             |
+| Scenario   | Support | Description |
+| ---        | ---     | ---         |
+| Daytime    | ✓       | All features supported |
+| Nighttime  | ✓       | Not recommended for high-speed lane changes |
+| Highway    | ✓       | No longitudinal planning; deceleration required when exiting the highway |
+| City Roads | ✓       | Intersection functionality disabled; no lane markings or curbs on both sides |
+| Rural Roads| ✓       | No lane markings or curbs on both sides |
+
+| Feature              | Support | Description       |
+| ---                  | :---:   | ---               |
+| Lane Centering Control (LCC) | ✓ | v < 80km/h  |
+| Lane Change Assistance (ALC) | ✓ | v < 80km/h  |
+| Forward Collision Warning (LCW) | ✓ |  |
+| Adaptive Cruise Control (ACC)  | ✗ |  |
 
 ## Environment Setup
 For environment setup, refer to [BUILD_en.md](https://github.com/Yutong-gannis/ETSAuto/blob/v2.x/BUILD_en.md)
@@ -65,11 +72,11 @@ Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Ru
   | &larr;   | Lateral   | ✓       |             |
   | &rarr;   | Longitudinal | ✓     |             |
   | &uarr;   | Assistance | ✓       |             |
-  | num 0    | Straight  | ✓       | v < 75km/h  |
+  | num 0    | Straight  | ✓       | v < 80km/h  |
   | num 1    | Left Turn | ✗       |             |
   | num 3    | Right Turn| ✗       |             |
-  | num 4    | Left Lane Change | ✓ | v < 70km/h  |
-  | num 6    | Right Lane Change | ✓ | v < 70km/h |
+  | num 4    | Left Lane Change | ✓ | v < 80/h  |
+  | num 6    | Right Lane Change | ✓ | v < 80km/h |
   | ctrl+q   | Exit      | ✓       |             |
 
 ## Sponsorship
@@ -87,7 +94,9 @@ If you like this project and want me to continue, consider sponsoring me! Thanks
 ## Plans
 - [x] LCC
 - [x] ALC
-- [ ] LCW
+- [x] LCW
+- [ ] ACC
+- [ ] AEB
 - [ ] SAS
 - [ ] TLR
 
