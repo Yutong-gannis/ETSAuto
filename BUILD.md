@@ -51,7 +51,7 @@
 
 + 下载权重文件
   
-  下载 [onnx 权重文件](https://github.com/Yutong-gannis/ETSAuto/releases/download/v2.0/ep049.onnx)，放在 `<PROJECT_PATH>/weights` 文件夹下（手动创建）。
+  从[release](https://github.com/Yutong-gannis/ETSAuto/releases)下载最新的bevlanedet和yolov8n模型，放在 `<PROJECT_PATH>/weights` 文件夹下（手动创建）。
 
 ### 3）已测试的环境
 
