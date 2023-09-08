@@ -50,8 +50,7 @@ class Perception:
         pool = ThreadPoolExecutor(max_workers=3)
         thread1 = pool.submit(self.lanedetector.infer, self.frame)
         thread2 = pool.submit(self.screengraber.update)
-        if self.frequency % 4 == 0:
-            thread3 = pool.submit(self.objectdetector.infer, self.frame)
+        thread3 = pool.submit(self.objectdetector.infer, self.frame)
         self.frame = thread2.result()
         pool.shutdown()
         end_time = time.time()
