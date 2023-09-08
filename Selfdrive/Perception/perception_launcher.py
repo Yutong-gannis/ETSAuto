@@ -23,13 +23,14 @@ class Perception:
     def __init__(self):
         self.power = 'on'
         self.response_time = 0.05
-        lane_path = os.path.abspath(os.path.join(project_path, '../weights/bevlanedet.onnx'))
-        yolo_path = os.path.abspath(os.path.join(project_path, '../weights/yolov8n.onnx'))
+        lane_path = os.path.abspath(os.path.join(project_path, '../weights/bevlanedet/resnet18_0.5_v2/ep049.onnx'))
+        yolo_path = os.path.abspath(os.path.join(project_path, '../weights/yolov8/best.onnx'))
         self.objectdetector = Bev_Lanedet(lane_path)
         self.lanedetector = YOLOv8(yolo_path)
         self.screengraber = ScreenGraber()
         self.frame = self.screengraber.update()
         self.fps = 0
+        self.frequency = 0
     
     def update(self):
         """Update the state of perception
@@ -37,6 +38,10 @@ class Perception:
         option_dict = load_pkl(os.path.join(project_path, 'Message/temp/option.pkl'))
         if option_dict is not None:
             self.power = option_dict['power']
+        self.count()
+        
+    def count(self):
+        self.frequency = self.frequency + 1
         
     def run(self):
         """Run the perceptions
@@ -45,7 +50,8 @@ class Perception:
         pool = ThreadPoolExecutor(max_workers=3)
         thread1 = pool.submit(self.lanedetector.infer, self.frame)
         thread2 = pool.submit(self.screengraber.update)
-        thread3 = pool.submit(self.objectdetector.infer, self.frame)
+        if self.frequency % 4 == 0:
+            thread3 = pool.submit(self.objectdetector.infer, self.frame)
         self.frame = thread2.result()
         pool.shutdown()
         end_time = time.time()
