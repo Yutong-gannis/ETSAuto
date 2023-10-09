@@ -6,3 +6,4 @@ scipy
 matplotlib
 ttkbootstrap
 albumentations
+shared_memory_dict
