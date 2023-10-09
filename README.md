@@ -48,7 +48,7 @@ ETSAuto 2 is an autonomous driving system for Euro Truck Simulator 2, which incl
 | Feature              | Support | Description       |
 | ---                  | :---:   | ---               |
 | Lane Centering Control (LCC) | ✓ | v < 80km/h  |
-| Lane Change Assistance (ALC) | ✓ | v < 80km/h  |
+| Lane Change Assistance (ALC) | ✓ | 15km/h < v < 80km/h  |
 | Forward Collision Warning (LCW) | ✓ |  |
 | Adaptive Cruise Control (ACC)  | ✗ |  |
 
@@ -75,8 +75,8 @@ Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Ru
   | num 0    | Straight  | ✓       | v < 80km/h  |
   | num 1    | Left Turn | ✗       |             |
   | num 3    | Right Turn| ✗       |             |
-  | num 4    | Left Lane Change | ✓ | v < 80/h  |
-  | num 6    | Right Lane Change | ✓ | v < 80km/h |
+  | num 4    | Left Lane Change | ✓ | 15km/h < v < 80/h  |
+  | num 6    | Right Lane Change | ✓ | 15km/h < v < 80km/h |
   | ctrl+q   | Exit      | ✓       |             |
 
 ## Sponsorship
