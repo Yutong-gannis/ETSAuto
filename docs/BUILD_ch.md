@@ -8,7 +8,7 @@
 
 - CUDA
 
-  [官网地址](https://developer.nvidia.com/cuda-toolkit)， 推荐使用 [10.2](https://developer.nvidia.com/cuda-10.2-download-archive) 版本，次选[11.7.0](https://developer.nvidia.com/cuda-11-7-0-download-archive) 版本，其他版本支持情况未知。
+  [官网地址](https://developer.nvidia.com/cuda-toolkit)，目前测试过的版本包括：[CUDA10.2](https://developer.nvidia.com/cuda-10.2-download-archive) 、[CUDA11.7](https://developer.nvidia.com/cuda-11-7-0-download-archive)、[CUDA11.2](https://developer.nvidia.com/cuda-11.2.0-download-archive) 。注意！30系显卡及以后推出的显卡请使用CUDA11.0及以后的版本！
 
 - cuDNN (For CUDA 11.x, 10.2)
 
