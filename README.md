@@ -20,7 +20,7 @@
 
 <div align="center">
 
-[简体中文](https://github.com/Yutong-gannis/ETSAuto/blob/v2.x/README.md) | English
+[简体中文](https://github.com/Yutong-gannis/ETSAuto/blob/v2.x/README_ch.md) | English
 
 </div>
 
