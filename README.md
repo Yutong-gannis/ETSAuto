@@ -34,7 +34,7 @@
 + [References](#references)
 
 ## Introduction
-ETSAuto 2 is an autonomous driving system for Euro Truck Simulator 2, which includes Lane Centering Control (LCC), Lane Change Assistance (ALC), and Forward Collision Warning (FCW) features. ETSAuto 2 is written in pure Python and runs on Windows systems. It uses the ONNX Runtime for inference (supports the TensorRT inference framework) and currently offers acceleration on Nvidia GPUs, with future support for AMD GPUs. In terms of perception, it achieves a response rate of less than 0.05ms and uses pure pursuit for vehicle control.
+ETSAuto 2 is an autonomous driving system for Euro Truck Simulator 2, which includes Lane Centering Control (LCC), Lane Change Assistance (ALC), and Forward Collision Warning (FCW) features. ETSAuto 2 is built in pure Python and runs on Windows system. It uses the ONNXRuntime for inference (also supports the TensorRT inference framework) and currently offers acceleration on Nvidia GPUs, with future support for AMD GPUs. In terms of perception, it achieves a response rate of less than 0.05ms and uses pure pursuit for vehicle control.
 
 ## Features
 | Scenario   | Support | Description |
