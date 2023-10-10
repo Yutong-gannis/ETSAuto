@@ -29,8 +29,8 @@ class Perception:
     def __init__(self):
         self.power = 'on'
         self.response_time = 0.05
-        lane_path = os.path.abspath(os.path.join(project_path, 'weights/bevlanedet/resnet18_0.5_v4/ep040.onnx'))
-        yolo_path = os.path.abspath(os.path.join(project_path, 'weights/yolov8/best.onnx'))
+        lane_path = os.path.abspath(os.path.join(project_path, 'weights/bevlanedet.onnx'))
+        yolo_path = os.path.abspath(os.path.join(project_path, 'weights/yolov8n.onnx'))
         self.objectdetector = Bev_Lanedet(lane_path)
         self.lanedetector = YOLOv8(yolo_path)
         self.screengraber = ScreenGraber()
