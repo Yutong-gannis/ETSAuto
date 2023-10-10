@@ -70,7 +70,7 @@ Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Ru
   | :---:    | :---:     | :---:   | ---         |
   | &darr;   | Manual    | ✓       |             |
   | &larr;   | Lateral   | ✓       |             |
-  | &rarr;   | Longitudinal | ✓     |             |
+  | &rarr;   | Navigation | ✓     |             |
   | &uarr;   | Assistance | ✓       |             |
   | num 0    | Straight  | ✓       | v < 80km/h  |
   | num 1    | Left Turn | ✗       |             |
