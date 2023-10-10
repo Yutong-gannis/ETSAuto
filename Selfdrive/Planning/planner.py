@@ -1,15 +1,10 @@
 import time
-import os
-import sys
 import math
 import scipy
-import sympy as sp
 import numpy as np
+from loguru import logger
 from shared_memory_dict import SharedMemoryDict
 
-current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '..'))
-sys.path.insert(0, project_path)
 from lib.changelane import ChangeLane_Helper
 from lib.longitude_planner import LongitudePlanner
 from lib.planregister import PlanRegister
@@ -43,20 +38,29 @@ class Planner:
             self.line_m = lane_dict_sub['line_m']
             self.line_l = lane_dict_sub['line_l']
             self.lane_width = lane_dict_sub['lane_width']
+        else:
+            logger.log("PlanningWarning", "Lane dictionary is broken!")
             
         if 'desire' in option_dict_sub.keys():
             self.desire =  option_dict_sub['desire']
             self.mode = option_dict_sub['mode']
-            
+        else:
+            logger.log("PlanningWarning", "Option dictionary is broken!")
         
         if 'nav_line' in nav_dict_sub.keys():
             self.nav_line = nav_dict_sub['nav_line']
         
         if len(condition_dict_sub):
             self.condition_dict = condition_dict_sub
+        else:
+            logger.log("PlanningWarning", "Condition dictionary is broken!")
             
         if len(dets_dict_sub):
             self.dets_dict = dets_dict_sub
+        else:
+            logger.log("PlanningWarning", "Detection dictionary is broken!")
+            
+        logger.log("PlanningInfo", "Planner update finish.")
         
             
     def run(self):
@@ -72,8 +76,10 @@ class Planner:
         
         if self.trajectory is not None and len(self.trajectory) >= 50:
             self.trajectory = self.plan_register.update(self.trajectory[:50, :])
-            print(self.trajectory.shape)
             if self.condition_dict is not None:
                 self.long_planner.update(self.condition_dict['speed'], self.condition_dict['speedlimit'])
                 plan_speed = self.long_planner.run(self.trajectory[:30, :])
                 plan_dict_pub['planv'] = plan_speed
+                logger.log("PlanningData", "Planv: {}", plan_speed)
+                
+        logger.log("PlanningInfo", "Planner running finish.")

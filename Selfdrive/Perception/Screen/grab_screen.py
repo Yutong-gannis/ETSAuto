@@ -3,7 +3,8 @@ import win32gui
 import win32ui
 import win32con
 import cv2
-import dxcam
+# import dxcam
+from loguru import logger
 
 
 class ScreenGraber:
@@ -15,15 +16,15 @@ class ScreenGraber:
         :type region: tuple 
         """
         self.region = region
-        self.camera = dxcam.create(region=self.region)
+        # self.camera = dxcam.create(region=self.region)
     
     def update(self):
         return self.win_grab()
-    
+    '''
     def dxcam_grab(self):
         frame = self.camera.grab()
         return frame
-    
+    '''
     def win_grab(self):
         """ 
         This is update frame function
@@ -52,4 +53,5 @@ class ScreenGraber:
         memdc.DeleteDC()
         win32gui.ReleaseDC(hwin, hwindc)
         win32gui.DeleteObject(bmp.GetHandle())
+        logger.log("PerceptionInfo", "Screen grabbing finish.")
         return frame

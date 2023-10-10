@@ -2,11 +2,12 @@ import os
 import numpy as np
 import sys
 import time
+from loguru import logger
 from shared_memory_dict import SharedMemoryDict
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '..'))
-sys.path.insert(0, project_path)
+process_path = os.path.abspath(os.path.join(current_path, '..'))
+sys.path.insert(0, process_path)
 from lib.controllers.purepursuit import PurePursuit
 from lib.controllers.pid import PID
 from lib.drive import Driver
@@ -57,6 +58,8 @@ class Controller:
         self.pid.update_e(speed_target - self.speed)
         self.acc = self.pid.get_a()
         self.acc = self.limit_accelerate(self.acc)
+        logger.log("ControlData", "acc: {}\t steer: {}", self.acc, self.steer)
+        
         if self.overspeed == True:
             self.acc = 0.1
         if self.desire in ['changelaneleft', 'changelaneright']:
@@ -71,6 +74,7 @@ class Controller:
             self.driver.drive(self.steer + 0.5, self.acc + 0.5)
         else:
             self.driver.drive(0.5, 0.5)
+        logger.log("ControlInfo", "Controller run finish.")
         
     def limit_accelerate(self, acc):
         if acc > self.acc_limit[1]:

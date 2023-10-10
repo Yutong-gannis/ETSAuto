@@ -1,10 +1,6 @@
 import numpy as np
-import os
-import sys
 import cv2
-current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '..'))
-sys.path.insert(0, project_path)
+
 from lib.virtualcamera.transform import line_transform
 
 

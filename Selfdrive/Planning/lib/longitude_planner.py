@@ -1,5 +1,7 @@
 import numpy as np
 import scipy
+from loguru import logger
+
 
 class LongitudePlanner:
     def __init__(self):
@@ -14,6 +16,7 @@ class LongitudePlanner:
     
     def run(self, trajectory):
         v_plan = self.plan_v_by_curvature(trajectory)
+        logger.log("PlanningInfo", "Longitude Planning finish")
         return v_plan
     
     def get_arc_curve(self, pts):

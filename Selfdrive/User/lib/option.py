@@ -1,10 +1,7 @@
 import win32api
 import numpy as np
-import os
+from loguru import logger
 from shared_memory_dict import SharedMemoryDict
-
-current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '../..'))
 
 
 class UserOption:
@@ -45,15 +42,18 @@ class UserOption:
         self.update_mode()
         self.update_desire()
         self.update_power()
+        logger.log("UserData", "Option: {mode}   {desire}   {power}", mode=self.mode, desire=self.desire, power=self.power)
+        
         states_dict_sub = SharedMemoryDict(name='states', size=1024)
         if 'lane_change_state' in states_dict_sub.keys():
             if states_dict_sub['lane_change_state'] == 3:
+                logger.log("UserInfo", "Lane changing finish, back to go traight.")
                 self.desire = 'straight'
+        logger.log("UserInfo", "Option uptate finish.")
 
     def publish(self):
         option_dict_pub = SharedMemoryDict(name='option', size=1024)
         option_dict_pub['mode'] = self.mode
         option_dict_pub['desire'] = self.desire
         option_dict_pub['power'] = self.power
-        # option_dict = UltraDict(option_dict, name='option', shared_lock=True, buffer_size=10000, auto_unlink=True)
-        
+        logger.log("UserInfo", "Option publish finish.")

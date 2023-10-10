@@ -1,11 +1,7 @@
 import numpy as np
-import os
-import sys
+from loguru import logger
 from shared_memory_dict import SharedMemoryDict
 
-current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '..'))
-sys.path.insert(0, project_path)
 from lib.ets2sdktelemetry import Ets2SdkTelemetry
 from lib.sharedmemory import SharedMemory
 
@@ -20,7 +16,7 @@ class Truck:  # 阿克曼转向模型
         self.dY = 0
         self.dtheta = 0
         self.ang = 0
-        self.acc = 0
+        self.acc = [0, 0]
         self.wheelbase = 8.0  # 轴距
         self.ld = 20  # 预瞄距离
         self.lf = 3.63  # 预瞄距离补偿
@@ -35,7 +31,6 @@ class Truck:  # 阿克曼转向模型
         """This is function update the truck's condition
         """
         data = self.sharemem.update()
-        print(data.lightsDashboard)
 
         self.dtheta = self.theta - data.rotationX * 2 * np.pi  # 逆时针为正
         self.theta = data.rotationX * 2 * np.pi
@@ -46,9 +41,15 @@ class Truck:  # 阿克曼转向模型
         self.acc = [data.accelerationX, data.accelerationY]
         self.dX = self.speed * np.cos(self.dtheta) * self.dt
         self.dY = self.speed * np.sin(self.dtheta) * self.dt
+        logger.log("ConditionData",
+                   "Truck condition:\n x: {}\t y: {}\t theta: {}\t dx: {}\t dy: {}\t dtheta: {}\t ang: {}\t acc: {}"+
+                   "\n wheelbase: {}\t ld: {}\t lf: {}\t speed: {}\t speedlimit: {}\t overspeed:{}\t dt:{}", 
+                   self.coordinateX, self.coordinateY, self.theta, self.dX, self.dY, self.dtheta, self.ang, self.acc, 
+                   self.wheelbase, self.ld, self.lf, self.speed, self.speedlimit, self.overspeed, self.dt)
+        logger.log("ConditionInfo", "Condition update finish.")
 
     def publish(self):
-        """This is function to publish condition data
+        """This is function to publish truck condition data
         """
         condition_dict_pub = SharedMemoryDict(name='condition', size=1024)
         condition_dict_pub['x'] =  self.coordinateX
@@ -66,3 +67,4 @@ class Truck:  # 阿克曼转向模型
         condition_dict_pub['speedlimit'] =  self.speedlimit
         condition_dict_pub['overspeed'] =  self.overspeed
         condition_dict_pub['dt'] =  self.dt
+        logger.log("ConditionInfo", "Truck condition publish finish.")

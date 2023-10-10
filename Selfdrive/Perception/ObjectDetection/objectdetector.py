@@ -4,11 +4,10 @@ import os
 import sys
 import numpy as np
 import onnxruntime
+from loguru import logger
 from shared_memory_dict import SharedMemoryDict
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '../..'))
-sys.path.insert(0, project_path)
 sys.path.insert(0, current_path)
 from lib.utils import xywh2xyxy,  multiclass_nms
 from lib.transform import Cam_Transform
@@ -21,9 +20,13 @@ class YOLOv8:
     :param path: The path of yolov8 onnx model
     :type path: str
     """
-    def __init__(self, path):
-        self.session = onnxruntime.InferenceSession(path, providers=['CUDAExecutionProvider',
-                                                                     'CPUExecutionProvider'])
+    def __init__(self, onnx_path):
+        try:
+            self.session = onnxruntime.InferenceSession(onnx_path, providers=['CUDAExecutionProvider',
+                                                                         'CPUExecutionProvider'])
+        except:
+            logger.log("PerceptionError", "Please put object detection weight to '{}'!!!", onnx_path)
+            sys.exit(1)
         self.input_name = self.session.get_inputs()[0].name
         self.output_name = self.session.get_outputs()[0].name
         self.conf_threshold = 0.5
@@ -48,6 +51,7 @@ class YOLOv8:
         outputs = self.session.run([self.output_name], {self.input_name: img})
         objects = self.postprocess(outputs)
         self.publish(objects)
+        logger.log("PerceptionInfo", "Object detection finish.")
 
     def preprocess(self, img):
         """
@@ -167,6 +171,7 @@ class YOLOv8:
         """
         dets_dict_pub = SharedMemoryDict(name='dets', size=1024)
         dets_dict_pub['objects'] = objects
+        logger.log("PerceptionInfo", "Object detection publish finish.")
 
                  
 

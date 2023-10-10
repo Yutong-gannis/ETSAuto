@@ -5,12 +5,11 @@ import sys
 import math
 import cv2
 import onnxruntime
+from loguru import logger
 import albumentations as A
 from shared_memory_dict import SharedMemoryDict
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '../..'))
-sys.path.insert(0, project_path)
 sys.path.insert(0, current_path)
 from lib.postprocess import sigmoid, bev_instance2points
 from lib.cluster import embedding_post
@@ -25,8 +24,12 @@ class Bev_Lanedet(object):
     :type path: str
     """
     def __init__(self, onnx_path):
-        self.session = onnxruntime.InferenceSession(onnx_path, providers=['CUDAExecutionProvider',
-                                                                          'CPUExecutionProvider'])
+        try:
+            self.session = onnxruntime.InferenceSession(onnx_path, providers=['CUDAExecutionProvider',
+                                                                              'CPUExecutionProvider'])
+        except:
+            logger.log("PerceptionError", "Please put lane detection weight to '{}'!!!", onnx_path)
+            sys.exit(1)                                                        
         self.input_name = self.session.get_inputs()[0].name
         self.output0_name = self.session.get_outputs()[0].name
         self.output1_name = self.session.get_outputs()[1].name
@@ -103,6 +106,7 @@ class Bev_Lanedet(object):
         line_m = get_skeleton(line_l, line_r)
 
         self.publish(line_l, line_r, line_ll, line_rr, line_m)
+        logger.log("PerceptionInfo", "Lane detection finish.")
     
     def conform_position(self, lines_temp):
         """This is function to conform position of lines
@@ -215,3 +219,5 @@ class Bev_Lanedet(object):
         lane_dict_pub['line_rr'] = line_rr
         lane_dict_pub['line_m'] = line_m
         lane_dict_pub['lane_width'] = self.lane_width
+        logger.log("PerceptionInfo", "Lane detection publish finish.")
+        

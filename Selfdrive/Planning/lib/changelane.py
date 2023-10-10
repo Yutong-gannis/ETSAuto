@@ -1,12 +1,8 @@
-import os
-import sys
 import math
 import numpy as np
+from loguru import logger
 from shared_memory_dict import SharedMemoryDict
 
-current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '../..'))
-sys.path.insert(0, project_path)
 from lib.optimizers.bazier_optimizer import point_on_bezier_curve
 from lib.transform import update_trajectory
 from lib.planregister import PlanRegister
@@ -150,6 +146,7 @@ class ChangeLane_Helper:
 
     def update(self, trajectory, line_l, plan_register, lane_width, desire, condition_dict):
         if desire in ['changelaneleft', 'changelaneright']:
+            logger.log("PlanningData", "Lane change State: {}", self.lane_change_state)
             if trajectory is not None:
                 if self.trajectory_change is None and self.lane_change_state == 0:  # 辅助变道规划
                     plan_register = PlanRegister()
@@ -170,7 +167,9 @@ class ChangeLane_Helper:
             self.trajectory_change = None
             self.lane_change_state = 0
             self.publish()
+            logger.log("PlanningInfo", "Lane changing finish")
         
+        logger.log("PlanningInfo", "Lane changing planning update finish")
         if self.trajectory_change is not None:
             return self.trajectory_change, plan_register
         else:
@@ -179,3 +178,4 @@ class ChangeLane_Helper:
     def publish(self):
         states_dict_pub = SharedMemoryDict(name='states', size=1024)
         states_dict_pub['lane_change_state'] = self.lane_change_state
+        logger.log("PlanningInfo", "Lane changing planning publish finish")

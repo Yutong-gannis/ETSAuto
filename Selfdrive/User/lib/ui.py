@@ -7,12 +7,13 @@ from ttkbootstrap import Style
 from tkinter import *
 import PIL.Image as Image
 import time
-import sys
 import os
+from loguru import logger
 import numpy as np
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(current_path, '../../..'))
+
 
 class App(Frame):
     """Class of tkinter app
@@ -22,6 +23,7 @@ class App(Frame):
     """
     def __init__(self, master=Tk()):
         super().__init__(master)
+        logger.log("UserInfo", "App initialize.", enqueue=True)
         self.master = master
         self.master.geometry("360x360-0+0")
         self.master.title("ETSAuto")
@@ -52,3 +54,4 @@ class App(Frame):
         
         self.canvas.pack()
         self.update()
+        logger.log("UserInfo", "UI update finish.", enqueue=True)

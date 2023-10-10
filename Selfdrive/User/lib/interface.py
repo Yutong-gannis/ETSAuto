@@ -1,12 +1,9 @@
-import os
-import sys
 import numpy as np
 import cv2
 import math
+from loguru import logger
 from shared_memory_dict import SharedMemoryDict
-current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '../..'))
-sys.path.insert(0, project_path)
+
 from lib.draw import draw_line_3d, draw_box_3d
 from lib.virtualcamera.transform import Calibration
 
@@ -40,7 +37,6 @@ class UserInterface:
         fcw_dict = SharedMemoryDict(name='fcw', size=1024)
         plan_dict_sub = SharedMemoryDict(name='plan', size=1024)
         
-        
         if 'trajectory' in plan_dict_sub.keys():
             self.trajectory = plan_dict_sub['trajectory']
         if 'fcw' in fcw_dict.keys():
@@ -55,6 +51,7 @@ class UserInterface:
         if 'speed' in condition_dict.keys():
             self.speed = condition_dict['speed']
             self.overspeed = condition_dict['overspeed']
+        logger.log("UserInfo", "Interface update finish.", enqueue=True)
 
     def show(self):
         """Funtion to draw 3d information on opencv canva
@@ -126,5 +123,5 @@ class UserInterface:
             warning_canvas = cv2.putText(warning_canvas, fcw_info, (int(self.show_size[0] / 2 - size[0][0] / 2), int(self.show_size[1]/2 + size[0][1] / 2)), self.font, 2,
                             (255, 255, 255), 6)
             canva = cv2.addWeighted(warning_canvas, alpha, canva, 1 - alpha, 0)
-
+        logger.log("UserInfo", "Interface show finish.", enqueue=True)
         return np.uint8(canva)

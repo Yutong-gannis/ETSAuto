@@ -6,10 +6,9 @@ import numpy as np
 import onnxruntime
 
 current_path = os.path.dirname(os.path.abspath(__file__))
-project_path = os.path.abspath(os.path.join(current_path, '../..'))
-sys.path.insert(0, project_path)
-from Perception.ObjectDetection.lib.utils import xywh2xyxy,  multiclass_nms
-from Perception.ObjectDetection.lib.transform import Cam_Transform
+sys.path.insert(0, current_path)
+from lib.utils import xywh2xyxy,  multiclass_nms
+from lib.transform import Cam_Transform
 
 
 class YOLOv8:
