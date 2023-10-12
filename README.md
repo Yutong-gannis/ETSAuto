@@ -75,7 +75,7 @@ Considering compatibility with graphics cards, from version 2.0 onwards, ONNX Ru
   | num 0    | Straight  | ✓       | v < 80km/h  |
   | num 1    | Left Turn | ✗       |             |
   | num 3    | Right Turn| ✗       |             |
-  | num 4    | Left Lane Change | ✓ | 15km/h < v < 80/h  |
+  | num 4    | Left Lane Change | ✓ | 15km/h < v < 80km/h  |
   | num 6    | Right Lane Change | ✓ | 15km/h < v < 80km/h |
   | ctrl+q   | Exit      | ✓       |             |
 
