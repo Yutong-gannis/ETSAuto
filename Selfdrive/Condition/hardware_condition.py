@@ -9,6 +9,7 @@ from shared_memory_dict import SharedMemoryDict
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(current_path, '../..'))
+sys.path.append(project_path)
 from Common.log import condition_data_level, condition_info_level, condition_warning_level
 
         
