@@ -13,6 +13,7 @@ from lib.ui import App
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(current_path, '../..'))
+sys.path.append(project_path)
 from Common.log import user_data_level, user_info_level, user_warning_level
 
 
