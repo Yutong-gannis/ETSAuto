@@ -1,5 +1,6 @@
 import time
 import os
+import sys
 import numpy as np
 from shared_memory_dict import SharedMemoryDict
 from loguru import logger
@@ -8,6 +9,7 @@ from planner import Planner
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(current_path, '../..'))
+sys.path.append(project_path)
 from Common.log import planning_data_level, planning_info_level, planning_warning_level
 
 
