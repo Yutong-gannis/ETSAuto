@@ -1,4 +1,5 @@
 import os
+import sys
 import numpy as np
 import time
 from loguru import logger
@@ -8,6 +9,7 @@ from controller import Controller
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(current_path, '../..'))
+sys.path.append(project_path)
 from Common.log import control_data_level, control_info_level, control_warning_level
 
 logger.add(os.path.join(project_path, "log/run.log"), rotation="100 MB")
