@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import cv2
 from loguru import logger
@@ -13,6 +14,7 @@ from Navigation.Navigation_Process import NavProcess
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 project_path = os.path.abspath(os.path.join(current_path, '../..'))
+sys.path.append(project_path)
 from Common.log import perception_data_level, perception_error_level, perception_info_level, perception_warning_level
 
 
