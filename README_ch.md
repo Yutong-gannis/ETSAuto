@@ -81,19 +81,6 @@ ETSAuto 2是可以运行在欧洲卡车模拟2上的卡车辅助驾驶系统，E
   | ctrl+q | 退出     | ✓     |     |
 
 
-
-## 赞助
-如果您喜欢这个项目，并希望我继续下去，可以考虑赞助我！感谢所有的爱和支持！
-
-+ 支付宝
-
-![a6x18041cro5ffnvur8sb1c](https://github.com/Yutong-gannis/ETSAuto/assets/69740611/11d36472-3cfa-42bc-b8ef-f71576f872c7)
-
-+ 微信
-
-![94214ceaca44085494ab079ce946ad4](https://github.com/Yutong-gannis/ETSAuto/assets/69740611/f455eab6-76f4-4a56-b5a8-5ec313f506f1)
-
-
 ## 计划
 - [x] LCC
 - [x] ALC
